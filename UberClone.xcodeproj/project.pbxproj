@@ -14,6 +14,9 @@
 		471145AC2A03B58700AED0DC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145AB2A03B58700AED0DC /* Extensions.swift */; };
 		471145AE2A03B59A00AED0DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145AD2A03B59A00AED0DC /* LoginViewController.swift */; };
 		471145B02A03B5B700AED0DC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145AF2A03B5B700AED0DC /* SignUpViewController.swift */; };
+		471145B22A0639FB00AED0DC /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145B12A0639FB00AED0DC /* UIColor.swift */; };
+		471145B52A064AAB00AED0DC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 471145B42A064AAB00AED0DC /* SnapKit */; };
+		471145B92A08E56800AED0DC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145B82A08E56800AED0DC /* AuthButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,8 @@
 		471145AB2A03B58700AED0DC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		471145AD2A03B59A00AED0DC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		471145AF2A03B5B700AED0DC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		471145B12A0639FB00AED0DC /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		471145B82A08E56800AED0DC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				471145B52A064AAB00AED0DC /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				471145AB2A03B58700AED0DC /* Extensions.swift */,
+				471145B12A0639FB00AED0DC /* UIColor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -99,6 +106,7 @@
 		471145A92A03B51900AED0DC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				471145B82A08E56800AED0DC /* AuthButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -126,6 +134,9 @@
 			dependencies = (
 			);
 			name = UberClone;
+			packageProductDependencies = (
+				471145B42A064AAB00AED0DC /* SnapKit */,
+			);
 			productName = UberClone;
 			productReference = 4711458F2A03B4F700AED0DC /* UberClone.app */;
 			productType = "com.apple.product-type.application";
@@ -154,6 +165,9 @@
 				Base,
 			);
 			mainGroup = 471145862A03B4F700AED0DC;
+			packageReferences = (
+				471145B32A064AAB00AED0DC /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 471145902A03B4F700AED0DC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -181,6 +195,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				471145AE2A03B59A00AED0DC /* LoginViewController.swift in Sources */,
+				471145B92A08E56800AED0DC /* AuthButton.swift in Sources */,
+				471145B22A0639FB00AED0DC /* UIColor.swift in Sources */,
 				471145932A03B4F700AED0DC /* AppDelegate.swift in Sources */,
 				471145AC2A03B58700AED0DC /* Extensions.swift in Sources */,
 				471145952A03B4F700AED0DC /* SceneDelegate.swift in Sources */,
@@ -392,6 +408,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		471145B32A064AAB00AED0DC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		471145B42A064AAB00AED0DC /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 471145B32A064AAB00AED0DC /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 471145872A03B4F700AED0DC /* Project object */;
 }

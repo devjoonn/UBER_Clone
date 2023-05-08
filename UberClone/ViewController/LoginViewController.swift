@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoginViewController: UIViewController {
 
+//MARK: - UI Components
     private let titleLabel: UILabel = {
         $0.text = "UBER"
         $0.font = UIFont(name: "Avenir-Light", size: 36)
@@ -21,7 +23,6 @@ class LoginViewController: UIViewController {
         let view = UIView().inputContainerView(image: UIImage(named: "ic_mail_outline_white")!, textField: emailTextField)
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
-        
     }()
     
     private lazy var passwordContainerView: UIView = {
@@ -39,13 +40,9 @@ class LoginViewController: UIViewController {
         return UITextField().textField(withPlaceHolder: "Password", isSecureTextEntry: true)
     }()
     
-    private let loginButton: UIButton = {
-        let button = UIButton(type: .system)
+    private let loginButton: AuthButton = {
+        let button = AuthButton(type: .system)
         button.setTitle("Log In", for: .normal)
-        button.setTitleColor(UIColor(white: 1, alpha: 0.5), for: .normal)
-        button.backgroundColor = UIColor.mainBlueTint
-        button.layer.cornerRadius = 5
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         return button
     }()
@@ -62,31 +59,43 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    
+//MARK: - Life cycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         setUIandConstraints()
     }
     
+    
+//MARK: - set UI
     func setUIandConstraints() {
         configureNavigationBar()
         
         view.addSubview(titleLabel)
-    
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
-        titleLabel.centerX(inView: view)
-        
         let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.spacing = 24
-        
         view.addSubview(stack)
-        stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16, paddingRight: 16)
-        
         view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.centerX(inView: view)
-        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
+        }
+        
+        stack.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).inset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        dontHaveAccountButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.height.equalTo(32)
+        }
     }
 
     func configureNavigationBar() {
@@ -94,6 +103,8 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.barStyle = .black
     }
     
+    
+//MARK: - handler
     @objc func handleShowSignUp() {
         let vc = SignUpViewController()
         navigationController?.pushViewController(vc, animated: true)
