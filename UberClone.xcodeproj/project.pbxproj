@@ -17,6 +17,11 @@
 		471145B22A0639FB00AED0DC /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145B12A0639FB00AED0DC /* UIColor.swift */; };
 		471145B52A064AAB00AED0DC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 471145B42A064AAB00AED0DC /* SnapKit */; };
 		471145B92A08E56800AED0DC /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145B82A08E56800AED0DC /* AuthButton.swift */; };
+		471145BE2A08ECEB00AED0DC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 471145BD2A08ECEB00AED0DC /* FirebaseAnalytics */; };
+		471145C02A08ECEB00AED0DC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 471145BF2A08ECEB00AED0DC /* FirebaseAuth */; };
+		471145C22A08ECEB00AED0DC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 471145C12A08ECEB00AED0DC /* FirebaseDatabase */; };
+		471145C42A08ECEB00AED0DC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 471145C32A08ECEB00AED0DC /* FirebaseStorage */; };
+		471145C62A08F59B00AED0DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 471145C52A08F59B00AED0DC /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,7 @@
 		471145AF2A03B5B700AED0DC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		471145B12A0639FB00AED0DC /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		471145B82A08E56800AED0DC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		471145C52A08F59B00AED0DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +44,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				471145BE2A08ECEB00AED0DC /* FirebaseAnalytics in Frameworks */,
+				471145C02A08ECEB00AED0DC /* FirebaseAuth in Frameworks */,
+				471145C22A08ECEB00AED0DC /* FirebaseDatabase in Frameworks */,
+				471145C42A08ECEB00AED0DC /* FirebaseStorage in Frameworks */,
 				471145B52A064AAB00AED0DC /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +83,7 @@
 				471145942A03B4F700AED0DC /* SceneDelegate.swift */,
 				4711459B2A03B4F800AED0DC /* Assets.xcassets */,
 				4711459D2A03B4F800AED0DC /* LaunchScreen.storyboard */,
+				471145C52A08F59B00AED0DC /* GoogleService-Info.plist */,
 				471145A02A03B4F800AED0DC /* Info.plist */,
 			);
 			path = UberClone;
@@ -136,6 +147,10 @@
 			name = UberClone;
 			packageProductDependencies = (
 				471145B42A064AAB00AED0DC /* SnapKit */,
+				471145BD2A08ECEB00AED0DC /* FirebaseAnalytics */,
+				471145BF2A08ECEB00AED0DC /* FirebaseAuth */,
+				471145C12A08ECEB00AED0DC /* FirebaseDatabase */,
+				471145C32A08ECEB00AED0DC /* FirebaseStorage */,
 			);
 			productName = UberClone;
 			productReference = 4711458F2A03B4F700AED0DC /* UberClone.app */;
@@ -167,6 +182,7 @@
 			mainGroup = 471145862A03B4F700AED0DC;
 			packageReferences = (
 				471145B32A064AAB00AED0DC /* XCRemoteSwiftPackageReference "SnapKit" */,
+				471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 471145902A03B4F700AED0DC /* Products */;
 			projectDirPath = "";
@@ -184,6 +200,7 @@
 			files = (
 				4711459F2A03B4F800AED0DC /* LaunchScreen.storyboard in Resources */,
 				4711459C2A03B4F800AED0DC /* Assets.xcassets in Resources */,
+				471145C62A08F59B00AED0DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +435,14 @@
 				kind = branch;
 			};
 		};
+		471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -425,6 +450,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 471145B32A064AAB00AED0DC /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		471145BD2A08ECEB00AED0DC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		471145BF2A08ECEB00AED0DC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		471145C12A08ECEB00AED0DC /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		471145C32A08ECEB00AED0DC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 471145BC2A08ECEB00AED0DC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

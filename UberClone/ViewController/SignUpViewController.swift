@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpViewController: UIViewController {
     
@@ -67,6 +69,7 @@ class SignUpViewController: UIViewController {
         let button = AuthButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -126,5 +129,30 @@ class SignUpViewController: UIViewController {
 //MARK: - handler
     @objc func handleShowLogin() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func handleSignUp() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        let accountTypeIndex = accountTypeSegmentControl.selectedSegmentIndex
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("회원가입 실패: \(error)")
+                print(error.localizedDescription)
+                return
+            }
+            
+            guard let uid = result?.user.uid else { return }
+            
+            let values = ["email": email,
+                          "fullname": fullname,
+                          "accountTypeIndex": accountTypeIndex] as [String: Any]
+            
+            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
+                print("유저 정보를 성공적으로 저장했습니다.")
+            }
+        }
     }
 }
