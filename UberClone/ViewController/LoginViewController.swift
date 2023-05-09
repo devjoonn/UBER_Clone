@@ -121,8 +121,10 @@ class LoginViewController: UIViewController {
                 print("Debug 로그인 실패: \(error.localizedDescription)")
                 return
             }
-            
             print("로그인 성공!")
+            let nav = UINavigationController(rootViewController: HomeViewController())
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true)
         }
     }
 }

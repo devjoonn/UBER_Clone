@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,7 +18,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.windowScene = windowScene
             window?.makeKeyAndVisible()
-            window?.rootViewController = UINavigationController(rootViewController: HomeViewController()) 
+            checkIfUserIsLogIn()
+             
+    }
+    
+    func checkIfUserIsLogIn() {
+        if Auth.auth().currentUser?.uid == nil {
+            print("DEBUG: 유저가 로그인 하지 않음")
+            window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+        } else {
+            print("DEBUG: 유저 로그인 중! - 유저 아이디: \(String(describing: Auth.auth().currentUser?.uid))")
+            window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

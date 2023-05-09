@@ -152,6 +152,7 @@ class SignUpViewController: UIViewController {
             
             Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
                 print("유저 정보를 성공적으로 저장했습니다.")
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
