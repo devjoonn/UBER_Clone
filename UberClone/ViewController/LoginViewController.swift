@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
 
@@ -44,6 +45,7 @@ class LoginViewController: UIViewController {
         let button = AuthButton(type: .system)
         button.setTitle("Log In", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -108,5 +110,19 @@ class LoginViewController: UIViewController {
     @objc func handleShowSignUp() {
         let vc = SignUpViewController()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func handleLogin() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Debug 로그인 실패: \(error.localizedDescription)")
+                return
+            }
+            
+            print("로그인 성공!")
+        }
     }
 }

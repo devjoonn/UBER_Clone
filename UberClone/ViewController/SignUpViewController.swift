@@ -139,7 +139,7 @@ class SignUpViewController: UIViewController {
         
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                print("회원가입 실패: \(error)")
+                print("Debug 회원가입 실패: \(error.localizedDescription)")
                 print(error.localizedDescription)
                 return
             }
