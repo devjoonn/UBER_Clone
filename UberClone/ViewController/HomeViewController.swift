@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     private let mapView = MKMapView()
     // 위치 묻는 역할
     private let locationManager = CLLocationManager()
+    private let locationInputActivationView = LocationInputActivationView()
     
 //MARK: - Life cycles
     override func viewDidLoad() {
@@ -40,6 +41,21 @@ class HomeViewController: UIViewController {
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()
+        
+        view.addSubview(locationInputActivationView)
+        locationInputActivationView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.equalTo(50)
+            make.width.equalTo(view.frame.width - 64)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
+        }
+        locationInputActivationView.alpha = 0
+        locationInputActivationView.delegate = self
+        
+        UIView.animate(withDuration: 2) {
+            self.locationInputActivationView.alpha = 1
+        }
+        
     }
     
     func configureMapView() {
@@ -87,4 +103,12 @@ extension HomeViewController: CLLocationManagerDelegate {
             locationManager.requestAlwaysAuthorization()
         }
     }
+}
+
+extension HomeViewController: LocationInputActivationViewDelegate {
+    func presentLocationInputView() {
+        print("LocationInputActivationView Delegate - ")
+    }
+    
+     
 }

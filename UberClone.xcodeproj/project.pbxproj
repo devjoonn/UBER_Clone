@@ -23,6 +23,7 @@
 		471145C42A08ECEB00AED0DC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 471145C32A08ECEB00AED0DC /* FirebaseStorage */; };
 		471145C62A08F59B00AED0DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 471145C52A08F59B00AED0DC /* GoogleService-Info.plist */; };
 		471145C82A0A244300AED0DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145C72A0A244300AED0DC /* HomeViewController.swift */; };
+		471145CA2A0BB35600AED0DC /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		471145B82A08E56800AED0DC /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		471145C52A08F59B00AED0DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		471145C72A0A244300AED0DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				471145B82A08E56800AED0DC /* AuthButton.swift */,
+				471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				471145B92A08E56800AED0DC /* AuthButton.swift in Sources */,
 				471145B22A0639FB00AED0DC /* UIColor.swift in Sources */,
 				471145C82A0A244300AED0DC /* HomeViewController.swift in Sources */,
+				471145CA2A0BB35600AED0DC /* LocationInputActivationView.swift in Sources */,
 				471145932A03B4F700AED0DC /* AppDelegate.swift in Sources */,
 				471145AC2A03B58700AED0DC /* Extensions.swift in Sources */,
 				471145952A03B4F700AED0DC /* SceneDelegate.swift in Sources */,
