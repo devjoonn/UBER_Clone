@@ -43,24 +43,10 @@ class HomeViewController: UIViewController {
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()
-        
-        
-        view.addSubview(locationInputActivationView)
-        locationInputActivationView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.height.equalTo(50)
-            make.width.equalTo(view.frame.width - 64)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
-        }
-        locationInputActivationView.alpha = 0
-        locationInputActivationView.delegate = self
-        
-        UIView.animate(withDuration: 2) {
-            self.locationInputActivationView.alpha = 1
-        }
-        
+        configureLocationActivationView()
     }
     
+    // MapView
     func configureMapView() {
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
@@ -71,6 +57,26 @@ class HomeViewController: UIViewController {
         self.mapView.setUserTrackingMode(.follow, animated: true)
     }
     
+    // 홈 뷰에 있는 where to Bar
+    func configureLocationActivationView() {
+        view.addSubview(locationInputActivationView)
+        locationInputActivationView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.equalTo(50)
+            make.width.equalTo(view.frame.width - 64)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
+        }
+        locationInputActivationView.alpha = 0
+        locationInputActivationView.delegate = self
+        
+        // 뷰가 보일 시 애니메이션
+        UIView.animate(withDuration: 2) {
+            self.locationInputActivationView.alpha = 1
+        }
+        
+    }
+    
+    // where to Bar를 누르면 나오는 View
     func configureLocationInputView() {
         locationInputView.delegate = self
         view.addSubview(locationInputView)
@@ -128,7 +134,6 @@ extension HomeViewController: CLLocationManagerDelegate {
 //MARK: - LocationInputActivationViewDelegate
 extension HomeViewController: LocationInputActivationViewDelegate {
     func presentLocationInputView() {
-        print("LocationInputActivationView Delegate - ")
         locationInputActivationView.alpha = 0 // locationInputView를 띄우며 사라져보이게
         configureLocationInputView()
     }
@@ -137,10 +142,14 @@ extension HomeViewController: LocationInputActivationViewDelegate {
 //MARK: - LocationInputViewDelegate
 extension HomeViewController: LocationInputViewDelegate {
     func dismissLocationInputView() {
+        // 천천히 사라지게
         UIView.animate(withDuration: 0.3, animations: {
             self.locationInputView.alpha = 0
         }) { _ in
-            self.locationInputActivationView.alpha = 1
+            // 천천히 다시 나타나게
+            UIView.animate(withDuration: 0.3, animations: {
+                self.locationInputActivationView.alpha = 1
+            })
         }
     }
     
