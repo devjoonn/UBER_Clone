@@ -13,7 +13,6 @@ protocol LocationInputActivationViewDelegate: AnyObject {
 }
 
 class LocationInputActivationView: UIView {
-    
     weak var delegate: LocationInputActivationViewDelegate?
     
 //MARK: - UI Components
@@ -48,10 +47,7 @@ class LocationInputActivationView: UIView {
     
 //MARK: - set UI
     func setUIandConstraints() {
-        layer.shadowColor = UIColor .black.cgColor
-        layer.shadowOpacity = 0.55
-        layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-        layer.masksToBounds = false
+        addShadow()
         
         addSubview(indicatorView)
         addSubview(placeholerLabel)
