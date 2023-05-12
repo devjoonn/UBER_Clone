@@ -11,6 +11,8 @@ import FirebaseAuth
 import MapKit
 import CoreLocation
 
+private let reuseIdentifier = "LocationCell"
+
 class HomeViewController: UIViewController {
 
 //MARK: - UI Components
@@ -19,6 +21,9 @@ class HomeViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let locationInputActivationView = LocationInputActivationView()
     private let locationInputView = LocationInputView()
+    private let tableView = UITableView()
+    
+    private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
     
 //MARK: - Life cycles
     override func viewDidLoad() {
@@ -44,6 +49,7 @@ class HomeViewController: UIViewController {
     func setUIandConstraints() {
         configureMapView()
         configureLocationActivationView()
+        configureTableView()
     }
     
     // MapView
@@ -91,6 +97,19 @@ class HomeViewController: UIViewController {
         }) { _ in
             print("DEBUG : 테이블 뷰 올라오는 중")
         }
+    }
+    
+    func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(LocationCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 60
+        
+        let height = view.frame.height - locationInputViewHeight
+        tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
+        
+        tableView.backgroundColor = .red
+        view.addSubview(tableView)
     }
     
 //MARK: - Helper
@@ -152,6 +171,16 @@ extension HomeViewController: LocationInputViewDelegate {
             })
         }
     }
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10 
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
+        return cell
+    }
 
 }
