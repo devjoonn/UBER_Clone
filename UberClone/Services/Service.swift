@@ -16,16 +16,14 @@ struct Service {
     static let shared = Service()
     let currentUid = Auth.auth().currentUser?.uid
     
-    func fatchUserData() {
+    func fatchUserData(completion: @escaping(User) -> Void) {
         
         // 현재 유저정보
         REF_USERS.child(currentUid!).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let fullName = dictionary["fullname"] as? String else { return }
-            print("DEBUG : fullname is \(String(describing: fullName))")
-            
+            let user = User(dictionary: dictionary)
+            completion(user)
         }
-        
         
     }
 }

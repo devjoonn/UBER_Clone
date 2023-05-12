@@ -27,6 +27,7 @@
 		471145CC2A0CE39F00AED0DC /* LocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145CB2A0CE39F00AED0DC /* LocationInputView.swift */; };
 		471145D22A0E3F0800AED0DC /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D12A0E3F0800AED0DC /* LocationCell.swift */; };
 		471145D42A0E805C00AED0DC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D32A0E805C00AED0DC /* Service.swift */; };
+		471145D62A0E87DB00AED0DC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D52A0E87DB00AED0DC /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		471145CB2A0CE39F00AED0DC /* LocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputView.swift; sourceTree = "<group>"; };
 		471145D12A0E3F0800AED0DC /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		471145D32A0E805C00AED0DC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		471145D52A0E87DB00AED0DC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 		471145AA2A03B52100AED0DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				471145D52A0E87DB00AED0DC /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				471145D62A0E87DB00AED0DC /* User.swift in Sources */,
 				471145AE2A03B59A00AED0DC /* LoginViewController.swift in Sources */,
 				471145B92A08E56800AED0DC /* AuthButton.swift in Sources */,
 				471145B22A0639FB00AED0DC /* UIColor.swift in Sources */,

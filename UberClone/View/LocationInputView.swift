@@ -13,6 +13,11 @@ protocol LocationInputViewDelegate: AnyObject {
 }
 
 class LocationInputView: UIView {
+    
+    var user: User? {
+        didSet { self.titleLabel.text = user?.fullname }
+    }
+    
     weak var delegate: LocationInputViewDelegate?
     
 //MARK: - UI Components

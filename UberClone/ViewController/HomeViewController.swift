@@ -24,6 +24,10 @@ class HomeViewController: UIViewController {
     private let tableView = UITableView()
     
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
+    private var user: User? {
+        // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
+        didSet { locationInputView.user = user }
+    }
     
 //MARK: - Life cycles
     override func viewDidLoad() {
@@ -39,7 +43,9 @@ class HomeViewController: UIViewController {
 //MARK: - Firebase API
     
     func fetchUserData() {
-        Service.shared.fatchUserData()
+        Service.shared.fatchUserData { user in
+            self.user = user
+        }
     }
     
     func signOut() {
