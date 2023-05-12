@@ -33,9 +33,14 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
         enableLocationServices()
+        fetchUserData()
     }
     
 //MARK: - Firebase API
+    
+    func fetchUserData() {
+        Service.shared.fatchUserData()
+    }
     
     func signOut() {
         do {
@@ -108,6 +113,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(LocationCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.rowHeight = 60
+        tableView.tableFooterView = UIView()
         
         let height = view.frame.height - locationInputViewHeight
         tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
@@ -165,7 +171,6 @@ extension HomeViewController: LocationInputActivationViewDelegate {
 extension HomeViewController: LocationInputViewDelegate {
     func dismissLocationInputView() {
         // 뷰 스택 쌓이지않게 삭제 - 중요
-        locationInputView.removeFromSuperview()
         // 천천히 사라지게
         UIView.animate(withDuration: 0.3, animations: {
             self.locationInputView.alpha = 0
@@ -173,6 +178,7 @@ extension HomeViewController: LocationInputViewDelegate {
             
         }) { _ in
             // 천천히 다시 나타나게
+            self.locationInputView.removeFromSuperview()
             UIView.animate(withDuration: 0.3, animations: {
                 self.locationInputActivationView.alpha = 1
             })
@@ -180,9 +186,18 @@ extension HomeViewController: LocationInputViewDelegate {
     }
 }
 
+//MARK: - TableView Delegate/DataSource
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Test"
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10 
+        return section == 0 ? 2 : 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

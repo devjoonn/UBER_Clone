@@ -26,6 +26,7 @@
 		471145CA2A0BB35600AED0DC /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */; };
 		471145CC2A0CE39F00AED0DC /* LocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145CB2A0CE39F00AED0DC /* LocationInputView.swift */; };
 		471145D22A0E3F0800AED0DC /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D12A0E3F0800AED0DC /* LocationCell.swift */; };
+		471145D42A0E805C00AED0DC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D32A0E805C00AED0DC /* Service.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
 		471145CB2A0CE39F00AED0DC /* LocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputView.swift; sourceTree = "<group>"; };
 		471145D12A0E3F0800AED0DC /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		471145D32A0E805C00AED0DC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		471145A72A03B50600AED0DC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				471145D32A0E805C00AED0DC /* Service.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				471145B22A0639FB00AED0DC /* UIColor.swift in Sources */,
 				471145C82A0A244300AED0DC /* HomeViewController.swift in Sources */,
 				471145CC2A0CE39F00AED0DC /* LocationInputView.swift in Sources */,
+				471145D42A0E805C00AED0DC /* Service.swift in Sources */,
 				471145CA2A0BB35600AED0DC /* LocationInputActivationView.swift in Sources */,
 				471145932A03B4F700AED0DC /* AppDelegate.swift in Sources */,
 				471145AC2A03B58700AED0DC /* Extensions.swift in Sources */,
