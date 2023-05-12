@@ -95,7 +95,11 @@ class HomeViewController: UIViewController {
         UIView.animate(withDuration: 0.5, animations: {
             self.locationInputView.alpha = 1
         }) { _ in
-            print("DEBUG : 테이블 뷰 올라오는 중")
+            // tableView 애니메이션
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.frame.origin.y = self.locationInputViewHeight
+            })
+            
         }
     }
     
@@ -108,7 +112,6 @@ class HomeViewController: UIViewController {
         let height = view.frame.height - locationInputViewHeight
         tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
         
-        tableView.backgroundColor = .red
         view.addSubview(tableView)
     }
     
@@ -161,9 +164,13 @@ extension HomeViewController: LocationInputActivationViewDelegate {
 //MARK: - LocationInputViewDelegate
 extension HomeViewController: LocationInputViewDelegate {
     func dismissLocationInputView() {
+        // 뷰 스택 쌓이지않게 삭제 - 중요
+        locationInputView.removeFromSuperview()
         // 천천히 사라지게
         UIView.animate(withDuration: 0.3, animations: {
             self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+            
         }) { _ in
             // 천천히 다시 나타나게
             UIView.animate(withDuration: 0.3, animations: {
