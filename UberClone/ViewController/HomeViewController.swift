@@ -32,20 +32,30 @@ class HomeViewController: UIViewController {
 //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        signOut()
+//        signOut()
         view.backgroundColor = .backgroundColor
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
         enableLocationServices()
         fetchUserData()
+        fetchDrivers()
     }
     
 //MARK: - Firebase API
     
     func fetchUserData() {
-        Service.shared.fatchUserData { user in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fatchUserData(uid: currentUid) { user in
             self.user = user
         }
+    }
+    
+    func fetchDrivers() {
+        guard let location = locationManager?.location else { return }
+        Service.shared.fetchDriver(location: location) { user in
+            print("DEBUG: driver = \(user.fullname)")
+        }
+        
     }
     
     func signOut() {
