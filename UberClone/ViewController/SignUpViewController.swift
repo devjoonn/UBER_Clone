@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import FirebaseAuth
 import FirebaseDatabase
+import GeoFire
 
 class SignUpViewController: UIViewController {
     
@@ -150,7 +151,18 @@ class SignUpViewController: UIViewController {
                           "fullname": fullname,
                           "accountTypeIndex": accountTypeIndex] as [String: Any]
             
-            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
+            if accountTypeIndex == 1 {
+                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                
+//                geoFire.setLocation(<#T##Any#>, forKey: uid) { (error) in
+//                    <#code#>
+//                })
+            }
+            
+            
+            
+            
+            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
                 print("유저 정보를 성공적으로 저장했습니다.")
                 self.dismiss(animated: true, completion: nil)
             }

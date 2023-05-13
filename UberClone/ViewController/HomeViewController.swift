@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
 //MARK: - UI Components
     private let mapView = MKMapView()
     // 위치 묻는 역할
-    private let locationManager = CLLocationManager()
+    private let locationManager = LocationHandler.shared.locationManager
     private let locationInputActivationView = LocationInputActivationView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
@@ -133,33 +133,24 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController: CLLocationManagerDelegate {
+extension HomeViewController {
     func enableLocationServices() {
-        locationManager.delegate = self
         
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: 위치 정보 없을 때 권한 정보 물음")
-            locationManager.requestWhenInUseAuthorization()
+            locationManager?.requestWhenInUseAuthorization()
         case .restricted, .denied:
             break
         case .authorizedAlways:
             print("DEBUG: 항상 위치정보 권한 사용중")
-            locationManager.startUpdatingLocation()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         case .authorizedWhenInUse:
             print("DEBUG: 앱을 사용할 때만 위치정보 권한 사용중")
-            locationManager.requestAlwaysAuthorization()
+            locationManager?.requestAlwaysAuthorization()
         @unknown default:
             break
-        }
-    }
-    
-    // 권한 부여 상태 변경 시
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
-        if status == .authorizedWhenInUse {
-            locationManager.requestAlwaysAuthorization()
         }
     }
 }
