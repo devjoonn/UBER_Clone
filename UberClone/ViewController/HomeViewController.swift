@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
 //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-//        signOut()
+        signOut()
         view.backgroundColor = .backgroundColor
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
@@ -151,7 +151,7 @@ extension HomeViewController {
             locationManager?.requestAlwaysAuthorization()
         @unknown default:
             break
-        }
+        }   
     }
 }
 

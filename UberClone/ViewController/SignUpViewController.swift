@@ -13,6 +13,8 @@ import GeoFire
 
 class SignUpViewController: UIViewController {
     
+    private var location = LocationHandler.shared.locationManager.location
+    
     //MARK: - UI Components
     private let titleLabel: UILabel = {
         $0.text = "UBER"
@@ -90,7 +92,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         setUIandConstraints()
-        
+        print("DEBUG: Current User's Location is \(location)")
     }
     
 //MARK: - set UI
@@ -152,20 +154,21 @@ class SignUpViewController: UIViewController {
                           "accountTypeIndex": accountTypeIndex] as [String: Any]
             
             if accountTypeIndex == 1 {
-                var geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
-                
-//                geoFire.setLocation(<#T##Any#>, forKey: uid) { (error) in
-//                    <#code#>
-//                })
+                let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                guard let location = self.location else { return }
+                geoFire.setLocation(location, forKey: uid, withCompletionBlock: { (error) in
+                    self.uploadUserDataAndShowHomeController(uid: uid, values: values)
+                })
             }
+            self.uploadUserDataAndShowHomeController(uid: uid, values: values)
+            self.navigationController?.popViewController(animated: true)
             
-            
-            
-            
-            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
-                print("유저 정보를 성공적으로 저장했습니다.")
-                self.dismiss(animated: true, completion: nil)
-            }
+        }
+    }
+    
+    func uploadUserDataAndShowHomeController(uid: String, values: [String: Any]) {
+        REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+            print("유저 정보를 성공적으로 저장했습니다.")
         }
     }
 }
