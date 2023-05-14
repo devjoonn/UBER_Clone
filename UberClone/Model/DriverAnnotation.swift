@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 class DriverAnnotation: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D // 좌표속성
+    dynamic var coordinate: CLLocationCoordinate2D // 좌표속성 - dynamic을 붙여야 마킹이 동적으로 위치 변경
     var uid: String
     
     init(uid: String, coordinate: CLLocationCoordinate2D) {
@@ -17,7 +17,12 @@ class DriverAnnotation: NSObject, MKAnnotation {
         self.coordinate = coordinate
     }
 
-    
+    // Driver 위치 변경 시 맵 뷰에 좌표 마킹 업데이트
+    func updateAnnotationPosition(withCoordinate coordinate: CLLocationCoordinate2D) {
+        UIView.animate(withDuration: 0.2) {
+            self.coordinate = coordinate
+        }
+    }
     
 }
 

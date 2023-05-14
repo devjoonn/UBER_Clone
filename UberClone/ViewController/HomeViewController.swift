@@ -52,12 +52,31 @@ class HomeViewController: UIViewController {
     }
     
     func fetchDrivers() {
+        print("DEBUG: HomeView called - fetchDriver")
         guard let location = locationManager?.location else { return }
         Service.shared.fetchDriver(location: location) { (driver) in //
-            guard let coordinate = driver.location?.coordinate else { return } // driver location
-            let annotation = DriverAnnotation.init(uid: driver.uid, coordinate: coordinate) // mapView에 마킹
+            guard let coordinate = driver.location?.coordinate else { return } // Driver location (드라이버 좌표 업데이트 시 coordinate도 변경)
+            let annotation = DriverAnnotation.init(uid: driver.uid, coordinate: coordinate) // mapView에 driver 마킹
             
-            self.mapView.addAnnotation(annotation)
+            // 드라이버의 정보가 있다면 
+            var driverIsVisible: Bool {
+                return self.mapView.annotations.contains(where: { annotation -> Bool in
+                    guard let driverAnnotation = annotation as? DriverAnnotation else { return false }
+                    if driverAnnotation.uid == driver.uid {
+                        // 드라이버 위치 갱신
+                        driverAnnotation.updateAnnotationPosition(withCoordinate: coordinate)
+                        print("DEBUG: Driver 위치 갱신")
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+            }
+            
+            if !driverIsVisible {
+                self.mapView.addAnnotation(annotation)
+            }
+            
         }
         
     }
