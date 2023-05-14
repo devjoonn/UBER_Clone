@@ -24,6 +24,7 @@
 		471145D42A0E805C00AED0DC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D32A0E805C00AED0DC /* Service.swift */; };
 		471145D62A0E87DB00AED0DC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D52A0E87DB00AED0DC /* User.swift */; };
 		471145D82A0F261500AED0DC /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145D72A0F261500AED0DC /* LocationHandler.swift */; };
+		471145E22A111D7A00AED0DC /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145E12A111D7A00AED0DC /* DriverAnnotation.swift */; };
 		7B9033D1B383610E65AC69B5 /* Pods_UberClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA91854FB07E6DC682D8F507 /* Pods_UberClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		471145D32A0E805C00AED0DC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		471145D52A0E87DB00AED0DC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		471145D72A0F261500AED0DC /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
+		471145E12A111D7A00AED0DC /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
 		7CFA2342FFA59FB6F7328F38 /* Pods-UberClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberClone.release.xcconfig"; path = "Target Support Files/Pods-UberClone/Pods-UberClone.release.xcconfig"; sourceTree = "<group>"; };
 		A61B4C08B8E8CD6D78A59CCD /* Pods-UberClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberClone.debug.xcconfig"; path = "Target Support Files/Pods-UberClone/Pods-UberClone.debug.xcconfig"; sourceTree = "<group>"; };
 		AA91854FB07E6DC682D8F507 /* Pods_UberClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UberClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,7 +72,6 @@
 				A61B4C08B8E8CD6D78A59CCD /* Pods-UberClone.debug.xcconfig */,
 				7CFA2342FFA59FB6F7328F38 /* Pods-UberClone.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -161,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				471145D52A0E87DB00AED0DC /* User.swift */,
+				471145E12A111D7A00AED0DC /* DriverAnnotation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -284,6 +286,7 @@
 				471145AE2A03B59A00AED0DC /* LoginViewController.swift in Sources */,
 				471145B92A08E56800AED0DC /* AuthButton.swift in Sources */,
 				471145B22A0639FB00AED0DC /* UIColor.swift in Sources */,
+				471145E22A111D7A00AED0DC /* DriverAnnotation.swift in Sources */,
 				471145C82A0A244300AED0DC /* HomeViewController.swift in Sources */,
 				471145D82A0F261500AED0DC /* LocationHandler.swift in Sources */,
 				471145CC2A0CE39F00AED0DC /* LocationInputView.swift in Sources */,

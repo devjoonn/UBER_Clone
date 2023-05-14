@@ -22,14 +22,15 @@ struct Service {
         // 현재 유저정보
         REF_USERS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            let user = User(dictionary: dictionary)
+            let uid = snapshot.key
+            let user = User(uid: uid,dictionary: dictionary)
             completion(user)
         }
     }
     
     func fetchDriver(location: CLLocation, completion: @escaping(User) -> Void) {
         let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
-        
+        // 현재 드라이버 정보
         REF_DRIVER_LOCATIONS.observe(.value) { (snapshot) in
             geoFire.query(at: location, withRadius: 50).observe(.keyEntered, with: { (uid, location) in
                 self.fatchUserData(uid: uid) { (user) in

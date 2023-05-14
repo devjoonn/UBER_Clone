@@ -52,8 +52,11 @@ class HomeViewController: UIViewController {
     
     func fetchDrivers() {
         guard let location = locationManager?.location else { return }
-        Service.shared.fetchDriver(location: location) { user in
-            print("DEBUG: driver = \(user.fullname)")
+        Service.shared.fetchDriver(location: location) { (driver) in //
+            guard let coordinate = driver.location?.coordinate else { return } // driver location
+            let annotation = DriverAnnotation.init(uid: driver.uid, coordinate: coordinate) // mapView에 마킹
+            
+            self.mapView.addAnnotation(annotation)
         }
         
     }
@@ -138,14 +141,12 @@ class HomeViewController: UIViewController {
     }
     
 //MARK: - Helper
-    
-    
-    
 }
 
+
+//MARK: - 위치 사용 권한 부여
 extension HomeViewController {
     func enableLocationServices() {
-        
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: 위치 정보 없을 때 권한 정보 물음")
