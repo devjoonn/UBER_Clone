@@ -19,7 +19,7 @@ struct Service {
     
     
     func fatchUserData(uid: String, completion: @escaping(User) -> Void) {
-        // 현재 유저정보
+        // 현재 유저정보 - 데이터베이스에서 가져옴 / 한 번만 실행
         REF_USERS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             let uid = snapshot.key
@@ -30,7 +30,7 @@ struct Service {
     
     func fetchDriver(location: CLLocation, completion: @escaping(User) -> Void) {
         let geoFire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
-        // 현재 드라이버 정보
+        // 현재 드라이버 정보 - 계속 관찰
         REF_DRIVER_LOCATIONS.observe(.value) { (snapshot) in
             geoFire.query(at: location, withRadius: 50).observe(.keyEntered, with: { (uid, location) in
                 self.fatchUserData(uid: uid) { (user) in

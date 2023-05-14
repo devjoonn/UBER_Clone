@@ -12,6 +12,7 @@ import MapKit
 import CoreLocation
 
 private let reuseIdentifier = "LocationCell"
+private let annotationIndentifier = "DriverAnnotation"
 
 class HomeViewController: UIViewController {
 
@@ -85,6 +86,7 @@ class HomeViewController: UIViewController {
         
         self.mapView.showsUserLocation = true
         self.mapView.setUserTrackingMode(.follow, animated: true)
+        self.mapView.delegate = self
     }
     
     // 홈 뷰에 있는 where to Bar
@@ -143,6 +145,17 @@ class HomeViewController: UIViewController {
 //MARK: - Helper
 }
 
+//MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? DriverAnnotation {
+            let view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIndentifier)
+            view.image = UIImage(named: "chevron-sign-to-right")
+            return view
+        }
+        return nil
+    }
+}
 
 //MARK: - 위치 사용 권한 부여
 extension HomeViewController {
