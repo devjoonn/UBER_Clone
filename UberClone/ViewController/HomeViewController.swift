@@ -209,6 +209,10 @@ extension HomeViewController: LocationInputActivationViewDelegate {
 
 //MARK: - LocationInputViewDelegate
 extension HomeViewController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        print("DEBUG: query = \(query)")
+    }
+    
     func dismissLocationInputView() {
         // 뷰 스택 쌓이지않게 삭제 - 중요
         // 천천히 사라지게

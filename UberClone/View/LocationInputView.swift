@@ -10,6 +10,7 @@ import SnapKit
 
 protocol LocationInputViewDelegate: AnyObject {
     func dismissLocationInputView()
+    func executeSearch(query: String)
 }
 
 class LocationInputView: UIView {
@@ -71,6 +72,7 @@ class LocationInputView: UIView {
         $0.backgroundColor = .lightGray
         $0.returnKeyType = .search
         $0.font = UIFont.systemFont(ofSize: 14)
+        $0.delegate = self
         
         let paddingView = UIView()
         paddingView.snp.makeConstraints { make in
@@ -150,5 +152,14 @@ class LocationInputView: UIView {
 //MARK: - handler
     @objc func handleBackTapped() {
         delegate?.dismissLocationInputView()
+    }
+}
+
+//MARK: - UITextFieldDelegate
+extension LocationInputView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let query = textField.text else { return false }
+        delegate?.executeSearch(query: query)
+        return true
     }
 }
