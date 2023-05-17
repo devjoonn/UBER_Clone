@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
     private let locationInputActivationView = LocationInputActivationView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
+    private var searchResults = [MKPlacemark]()
     
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
     private var user: User? {
@@ -160,8 +161,26 @@ class HomeViewController: UIViewController {
         
         view.addSubview(tableView)
     }
-    
-//MARK: - Helper
+}
+
+//MARK: - Map Helper Functions
+private extension HomeViewController {
+    func searchBy(naturalLanguageQuery: String, completion: @escaping([MKPlacemark]) -> Void) {
+        var results = [MKPlacemark]()
+        let request = MKLocalSearch.Request()
+        request.region = mapView.region
+        request.naturalLanguageQuery = naturalLanguageQuery
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            guard let response = response else { return }
+            response.mapItems.forEach { item in
+                results.append(item.placemark)
+            }
+            // 위치내에 검색 값을 marking
+            completion(results)
+        }
+    }
 }
 
 //MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
@@ -210,7 +229,10 @@ extension HomeViewController: LocationInputActivationViewDelegate {
 //MARK: - LocationInputViewDelegate
 extension HomeViewController: LocationInputViewDelegate {
     func executeSearch(query: String) {
-        print("DEBUG: query = \(query)")
+        searchBy(naturalLanguageQuery: query) { results in
+            self.searchResults = results
+            self.tableView.reloadData()
+        }
     }
     
     func dismissLocationInputView() {
@@ -241,7 +263,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : 5
+        return section == 0 ? 2 : searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
