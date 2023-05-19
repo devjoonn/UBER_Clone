@@ -7,19 +7,25 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 class LocationCell: UITableViewCell {
 
 //MARK: - Properties
+    var placemark: MKPlacemark? {
+        didSet {
+            titleLabel.text = placemark?.name
+            addressLabel.text = placemark?.address // extension MKPlacemark address 
+        }
+    }
+    
     private let titleLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 14)
-        $0.text = "123 Main Street"
         return $0
     }(UILabel())
     
     private let addressLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 14)
-        $0.text = "123 Main Street, Washington, DC"
         $0.textColor = .lightGray
         return $0
     }(UILabel())
