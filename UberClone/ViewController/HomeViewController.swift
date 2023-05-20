@@ -161,6 +161,21 @@ class HomeViewController: UIViewController {
         
         view.addSubview(tableView)
     }
+    
+    // 테이블 뷰에서 셀 선택하면 뷰가 사라지게 만드는 함수
+    func dismissLocationView(completion: ((Bool) -> Void)? = nil) {
+        // 천천히 사라지게
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+            // 천천히 다시 나타나게
+            // 뷰 스택 쌓이지않게 삭제 - 중요
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.5, animations: {
+                self.locationInputActivationView.alpha = 1
+            })
+        }, completion: completion)
+    }
 }
 
 //MARK: - Map Helper Functions
@@ -236,19 +251,7 @@ extension HomeViewController: LocationInputViewDelegate {
     }
     
     func dismissLocationInputView() {
-        // 뷰 스택 쌓이지않게 삭제 - 중요
-        // 천천히 사라지게
-        UIView.animate(withDuration: 0.3, animations: {
-            self.locationInputView.alpha = 0
-            self.tableView.frame.origin.y = self.view.frame.height
-            
-        }) { _ in
-            // 천천히 다시 나타나게
-            self.locationInputView.removeFromSuperview()
-            UIView.animate(withDuration: 0.3, animations: {
-                self.locationInputActivationView.alpha = 1
-            })
-        }
+        dismissLocationView()
     }
 }
 
@@ -274,6 +277,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        dismissLocationView { _ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
     }
 
 }
