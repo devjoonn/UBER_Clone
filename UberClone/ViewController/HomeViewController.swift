@@ -24,12 +24,18 @@ class HomeViewController: UIViewController {
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
-    
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
+    
     private var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
         didSet { locationInputView.user = user }
     }
+    
+    private let actionButton: UIButton = {
+        $0.setImage(UIImage(named: "baseline_menu_black"), for: .normal)
+        $0.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return $0
+    }(UIButton())
     
 //MARK: - Life cycles
     override func viewDidLoad() {
@@ -41,6 +47,11 @@ class HomeViewController: UIViewController {
         enableLocationServices()
         fetchUserData()
         fetchDrivers()
+    }
+    
+//MARK: - Selector
+    @objc func actionButtonPressed() {
+        
     }
     
 //MARK: - Firebase API
@@ -109,14 +120,16 @@ class HomeViewController: UIViewController {
         self.mapView.delegate = self
     }
     
-    // 홈 뷰에 있는 where to Bar
+    // 홈 뷰에 있는 where to Bar and Menu
     func configureLocationActivationView() {
         view.addSubview(locationInputActivationView)
+        view.addSubview(actionButton)
+        
         locationInputActivationView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
             make.width.equalTo(view.frame.width - 64)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
+            make.top.equalTo(actionButton.snp.bottom).inset(-32)
         }
         locationInputActivationView.alpha = 0
         locationInputActivationView.delegate = self
@@ -124,6 +137,12 @@ class HomeViewController: UIViewController {
         // 뷰가 보일 시 애니메이션
         UIView.animate(withDuration: 2) {
             self.locationInputActivationView.alpha = 1
+        }
+        
+        actionButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.leading.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
         }
         
     }
