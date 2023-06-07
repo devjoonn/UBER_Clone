@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
     
 //MARK: - Selector
     @objc func actionButtonPressed() {
-        
+        print("actionButton Press")
     }
     
 //MARK: - Firebase API
@@ -271,8 +271,6 @@ extension HomeViewController: LocationInputViewDelegate {
             UIView.animate(withDuration: 0.5, animations: {
                 self.locationInputActivationView.alpha = 1
             })
-            
-            
         }
     }
 }
@@ -303,6 +301,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
+        
+        actionButton.setImage(UIImage(named: "baseline_arrow_back"), for: .normal)
+        
         dismissLocationView { _ in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
