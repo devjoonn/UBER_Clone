@@ -190,9 +190,6 @@ class HomeViewController: UIViewController {
             // 천천히 다시 나타나게
             // 뷰 스택 쌓이지않게 삭제 - 중요
             self.locationInputView.removeFromSuperview()
-            UIView.animate(withDuration: 0.5, animations: {
-                self.locationInputActivationView.alpha = 1
-            })
         }, completion: completion)
     }
 }
@@ -270,7 +267,13 @@ extension HomeViewController: LocationInputViewDelegate {
     }
     
     func dismissLocationInputView() {
-        dismissLocationView()
+        dismissLocationView { _ in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.locationInputActivationView.alpha = 1
+            })
+            
+            
+        }
     }
 }
 
