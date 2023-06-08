@@ -66,6 +66,24 @@ class HomeViewController: UIViewController {
             print("DEBUG : showMenu")
         case .dismissActionView:
             print("DEBUG : dismiss")
+            
+            UIView.animate(withDuration: 0.3) {
+                self.locationInputActivationView.alpha = 1
+                self.configureActionButton(config: .showMenu)
+                
+            }
+        }
+    }
+    
+    // 현재 config에 따라 이미지 변환 & 설정
+    fileprivate func configureActionButton(config: ActionButtonConfiguration) {
+        switch config {
+        case .showMenu:
+            self.actionButton.setImage(UIImage(named: "baseline_menu_black"), for: .normal)
+            self.actionButtonConfig = .showMenu
+        case .dismissActionView:
+            actionButton.setImage(UIImage(named: "baseline_arrow_back"), for: .normal)
+            actionButtonConfig = .dismissActionView // enum으로 dismiss된 것 처리
         }
         
     }
@@ -318,9 +336,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
         
-        actionButton.setImage(UIImage(named: "baseline_arrow_back"), for: .normal)
-        actionButtonConfig = .dismissActionView // enum으로 dismiss된 것 처리
-        
+        configureActionButton(config: .dismissActionView)
         
         dismissLocationView { _ in
             let annotation = MKPointAnnotation()
