@@ -65,7 +65,12 @@ class HomeViewController: UIViewController {
         case .showMenu:
             print("DEBUG : showMenu")
         case .dismissActionView:
-            print("DEBUG : dismiss")
+            mapView.annotations.forEach { (annotation) in
+                // 장소 선택 후 뒤돌아가기 시 annotation 삭제
+                if let anno = annotation as? MKAnnotation {
+                    mapView.removeAnnotation(anno)
+                }
+            }
             
             UIView.animate(withDuration: 0.3) {
                 self.locationInputActivationView.alpha = 1
