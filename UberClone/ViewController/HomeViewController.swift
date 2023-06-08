@@ -14,6 +14,15 @@ import CoreLocation
 private let reuseIdentifier = "LocationCell"
 private let annotationIndentifier = "DriverAnnotation"
 
+private enum ActionButtonConfiguration {
+    case showMenu
+    case dismissActionView
+    
+    init() {
+        self = .showMenu
+    }
+}
+
 class HomeViewController: UIViewController {
 
 //MARK: - UI Components
@@ -25,6 +34,7 @@ class HomeViewController: UIViewController {
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
+    private var actionButtonConfig = ActionButtonConfiguration()
     
     private var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
@@ -51,7 +61,13 @@ class HomeViewController: UIViewController {
     
 //MARK: - Selector
     @objc func actionButtonPressed() {
-        print("actionButton Press")
+        switch actionButtonConfig {
+        case .showMenu:
+            print("DEBUG : showMenu")
+        case .dismissActionView:
+            print("DEBUG : dismiss")
+        }
+        
     }
     
 //MARK: - Firebase API
@@ -303,6 +319,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedPlacemark = searchResults[indexPath.row]
         
         actionButton.setImage(UIImage(named: "baseline_arrow_back"), for: .normal)
+        actionButtonConfig = .dismissActionView // enum으로 dismiss된 것 처리
+        
         
         dismissLocationView { _ in
             let annotation = MKPointAnnotation()
