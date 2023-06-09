@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
     private var actionButtonConfig = ActionButtonConfiguration()
+    private var route: MKRoute?
     
     private var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
@@ -233,8 +234,9 @@ class HomeViewController: UIViewController {
     }
 }
 
-//MARK: - Map Helper Functions
+//MARK: - MapView Helper Functions
 private extension HomeViewController {
+    // 검색어에 맞는 값 marking 하는 함수
     func searchBy(naturalLanguageQuery: String, completion: @escaping([MKPlacemark]) -> Void) {
         var results = [MKPlacemark]()
         let request = MKLocalSearch.Request()
@@ -251,6 +253,25 @@ private extension HomeViewController {
             completion(results)
         }
     }
+    
+    // 폴리라인 생성하는 함수
+    func generatePolyline(toDestination destination: MKMapItem) {
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = destination
+        request.transportType = .automobile
+        
+        let directionReqeust = MKDirections(request: request)
+        directionReqeust.calculate { (response, error) in
+            guard let response = response else { return }
+            // 선언되어있는 route에 루트 값 추가
+            self.route = response.routes[0]
+            guard let polyline = self.route?.polyline else { return }
+            self.mapView.addOverlay(polyline)
+        }
+        
+    }
 }
 
 //MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
@@ -262,6 +283,18 @@ extension HomeViewController: MKMapViewDelegate {
             return view
         }
         return nil
+    }
+    
+    // polyline을 그리는 함수
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let route = self.route {
+            let polyline = route.polyline
+            let lineRenderer = MKPolylineRenderer(overlay: polyline)
+            lineRenderer.strokeColor = .mainBlueTint
+            lineRenderer.lineWidth = 3
+            return lineRenderer
+        }
+        return MKOverlayRenderer()
     }
 }
 
@@ -342,6 +375,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedPlacemark = searchResults[indexPath.row]
         
         configureActionButton(config: .dismissActionView)
+        
+        
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
         
         dismissLocationView { _ in
             let annotation = MKPointAnnotation()
