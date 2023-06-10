@@ -66,12 +66,7 @@ class HomeViewController: UIViewController {
         case .showMenu:
             print("DEBUG : showMenu")
         case .dismissActionView:
-            mapView.annotations.forEach { (annotation) in
-                // 장소 선택 후 뒤돌아가기 시 annotation 삭제
-                if let anno = annotation as? MKAnnotation {
-                    mapView.removeAnnotation(anno)
-                }
-            }
+            removeAnnotationAndOverlays()
             
             UIView.animate(withDuration: 0.3) {
                 self.locationInputActivationView.alpha = 1
@@ -270,7 +265,19 @@ private extension HomeViewController {
             guard let polyline = self.route?.polyline else { return }
             self.mapView.addOverlay(polyline)
         }
+    }
+    
+    // 장소 선택 후 뒤돌아가기 시 annotation 삭제 & overlay(Polyline) 삭제
+    func removeAnnotationAndOverlays() {
+        mapView.annotations.forEach { (annotation) in
+            if let anno = annotation as? MKAnnotation {
+                mapView.removeAnnotation(anno)
+            }
+        }
         
+        if mapView.overlays.count > 0 {
+            mapView.removeOverlay(mapView.overlays[0])
+        }
     }
 }
 
