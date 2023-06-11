@@ -380,6 +380,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
+        var annotations = [MKAnnotation]()
         
         configureActionButton(config: .dismissActionView)
         
@@ -387,11 +388,25 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let destination = MKMapItem(placemark: selectedPlacemark)
         generatePolyline(toDestination: destination)
         
+        // locationView 사라지며 선택한 주소 값을 marking
         dismissLocationView { _ in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
             self.mapView.addAnnotation(annotation)
             self.mapView.selectAnnotation(annotation, animated: true)
+            
+            // annotation과 User의 위치에 맞게 지도 확대
+            self.mapView.annotations.forEach { (annotation) in
+                if let anno = annotation as? MKUserLocation {
+                    annotations.append(anno)
+                }
+                
+                if let anno = annotation as? MKPointAnnotation {
+                    annotations.append(anno)
+                }
+            }
+            
+            self.mapView.showAnnotations(annotations, animated: true)
         }
     }
 
