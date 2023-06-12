@@ -67,11 +67,11 @@ class HomeViewController: UIViewController {
             print("DEBUG : showMenu")
         case .dismissActionView:
             removeAnnotationAndOverlays()
+            mapView.showAnnotations(mapView.annotations, animated: true)
             
             UIView.animate(withDuration: 0.3) {
                 self.locationInputActivationView.alpha = 1
                 self.configureActionButton(config: .showMenu)
-                
             }
         }
     }
@@ -380,7 +380,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
-        var annotations = [MKAnnotation]()
         
         configureActionButton(config: .dismissActionView)
         
@@ -395,16 +394,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             self.mapView.addAnnotation(annotation)
             self.mapView.selectAnnotation(annotation, animated: true)
             
+            // mapView에 있는 annotations의 값이 DriverAnnotation 클래스와 같으면
             // annotation과 User의 위치에 맞게 지도 확대
-            self.mapView.annotations.forEach { (annotation) in
-                if let anno = annotation as? MKUserLocation {
-                    annotations.append(anno)
-                }
-                
-                if let anno = annotation as? MKPointAnnotation {
-                    annotations.append(anno)
-                }
-            }
+            let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
             
             self.mapView.showAnnotations(annotations, animated: true)
         }
