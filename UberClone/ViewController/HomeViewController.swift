@@ -140,6 +140,7 @@ class HomeViewController: UIViewController {
 //MARK: - set UI
     func setUIandConstraints() {
         configureMapView()
+        configureRideActionView()
         configureLocationActivationView()
         configureTableView()
     }
@@ -204,7 +205,10 @@ class HomeViewController: UIViewController {
     }
     
     func configureRideActionView() {
+        view.addSubview(rideActionView)
         
+        // tableView의 frame과 같음
+        rideActionView.frame = CGRect(x: 0, y: view.frame.height - 300, width: view.frame.width, height: 300)
     }
     
     func configureTableView() {
