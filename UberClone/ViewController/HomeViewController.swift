@@ -30,6 +30,7 @@ class HomeViewController: UIViewController {
     // 위치 묻는 역할
     private let locationManager = LocationHandler.shared.locationManager
     private let locationInputActivationView = LocationInputActivationView()
+    private let rideActionView = RideActionView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
@@ -199,8 +200,11 @@ class HomeViewController: UIViewController {
             UIView.animate(withDuration: 0.3, animations: {
                 self.tableView.frame.origin.y = self.locationInputViewHeight
             })
-            
         }
+    }
+    
+    func configureRideActionView() {
+        
     }
     
     func configureTableView() {
