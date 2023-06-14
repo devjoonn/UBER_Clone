@@ -237,9 +237,15 @@ class HomeViewController: UIViewController {
         }, completion: completion)
     }
     
-    func presentRideActionView() {
-        UIView.animate(withDuration: 0.3) {
-            self.rideActionView.frame.origin.y = self.view.frame.height - self.rideActionViewHeight
+    func presentRideActionView(shouldShow: Bool) {
+        if shouldShow {
+            UIView.animate(withDuration: 0.3) {
+                self.rideActionView.frame.origin.y = self.view.frame.height - self.rideActionViewHeight
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.rideActionView.frame.origin.y = self.view.frame.height
+            }
         }
     }
 }
