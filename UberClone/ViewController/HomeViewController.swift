@@ -74,6 +74,7 @@ class HomeViewController: UIViewController {
             UIView.animate(withDuration: 0.3) {
                 self.locationInputActivationView.alpha = 1
                 self.configureActionButton(config: .showMenu)
+                self.presentRideActionView(shouldShow: false)
             }
         }
     }
@@ -237,15 +238,12 @@ class HomeViewController: UIViewController {
         }, completion: completion)
     }
     
+    // rideActionView y값으로 가시성 조절 - didselect 시 true 반환 / 뒤로가기 시 false 반환
     func presentRideActionView(shouldShow: Bool) {
-        if shouldShow {
-            UIView.animate(withDuration: 0.3) {
-                self.rideActionView.frame.origin.y = self.view.frame.height - self.rideActionViewHeight
-            }
-        } else {
-            UIView.animate(withDuration: 0.3) {
-                self.rideActionView.frame.origin.y = self.view.frame.height
-            }
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight : self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.rideActionView.frame.origin.y = yOrigin
         }
     }
 }
@@ -418,8 +416,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // mapView에 있는 annotations의 값이 DriverAnnotation 클래스와 같으면
             // annotation과 User의 위치에 맞게 지도 확대
             let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
-            
             self.mapView.showAnnotations(annotations, animated: true)
+            
+            self.presentRideActionView(shouldShow: true)
         }
     }
 
