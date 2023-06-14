@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
+    private final let rideActionViewHeight: CGFloat = 300 // - 어디서든 수정 불가
     private var actionButtonConfig = ActionButtonConfiguration()
     private var route: MKRoute?
     
@@ -208,7 +209,7 @@ class HomeViewController: UIViewController {
         view.addSubview(rideActionView)
         
         // tableView의 frame과 같음
-        rideActionView.frame = CGRect(x: 0, y: view.frame.height - 300, width: view.frame.width, height: 300)
+        rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
     }
     
     func configureTableView() {
@@ -234,6 +235,12 @@ class HomeViewController: UIViewController {
             // 뷰 스택 쌓이지않게 삭제 - 중요
             self.locationInputView.removeFromSuperview()
         }, completion: completion)
+    }
+    
+    func presentRideActionView() {
+        UIView.animate(withDuration: 0.3) {
+            self.rideActionView.frame.origin.y = self.view.frame.height - self.rideActionViewHeight
+        }
     }
 }
 

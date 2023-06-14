@@ -64,6 +64,7 @@ class RideActionView: UIView {
     private let actionButton: UIButton = {
         $0.backgroundColor = .black
         $0.setTitle("CONFIRM UBERX", for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         $0.setTitleColor(.white, for: .normal)
         $0.addTarget(self, action: #selector(actionButtonPress), for: .touchUpInside)
         return $0
