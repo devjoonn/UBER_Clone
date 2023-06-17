@@ -419,6 +419,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             self.mapView.showAnnotations(annotations, animated: true)
             
             self.animateRideActionView(shouldShow: true)
+            self.rideActionView.destination = selectedPlacemark
         }
     }
 

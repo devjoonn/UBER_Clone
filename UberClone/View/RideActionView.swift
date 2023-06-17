@@ -7,10 +7,18 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 class RideActionView: UIView {
 
 //MARK: - Properties
+    var destination: MKPlacemark? {
+        didSet {
+            titleLabel.text = destination?.name
+            addressLabel.text = destination?.address
+        }
+    }
+    
     private let titleLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 18)
         $0.text = "Test Address Title"
