@@ -239,8 +239,13 @@ class HomeViewController: UIViewController {
     }
     
     // rideActionView y값으로 가시성 조절 - didselect 시 true 반환 / 뒤로가기 시 false 반환
-    func animateRideActionView(shouldShow: Bool) {
+    func animateRideActionView(shouldShow: Bool, destination: MKPlacemark? = nil) {
         let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight : self.view.frame.height
+        
+        if shouldShow {
+            guard let destination = destination else { return }
+            self.rideActionView.destination = destination
+        }
         
         UIView.animate(withDuration: 0.3) {
             self.rideActionView.frame.origin.y = yOrigin
@@ -418,8 +423,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
             self.mapView.showAnnotations(annotations, animated: true)
             
-            self.animateRideActionView(shouldShow: true)
-            self.rideActionView.destination = selectedPlacemark
+            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
         }
     }
 
