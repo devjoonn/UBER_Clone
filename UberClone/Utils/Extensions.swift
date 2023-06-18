@@ -98,3 +98,20 @@ extension MKPlacemark {
     }
         
 }
+
+extension MKMapView {
+    // 사용자의 줌에 맞게 지정 - RideActionView에 가리지 않게
+    func zoomToFit(annotations: [MKAnnotation]) {
+        // 2차원 지도 투영법의 직사각형 영역
+        var zoomRect = MKMapRect.null
+        
+        annotations.forEach { (annotation) in
+            let annotationPoint = MKMapPoint(annotation.coordinate)
+            let pointRect = MKMapRect(x: annotationPoint.x, y: annotationPoint.y, width: 0.01, height: 0.01)
+            zoomRect = zoomRect.union(pointRect)
+        }
+        
+        let insets = UIEdgeInsets(top: 75, left: 75, bottom: 200, right: 200)
+        setVisibleMapRect(zoomRect, edgePadding: insets, animated: true)
+    }
+}

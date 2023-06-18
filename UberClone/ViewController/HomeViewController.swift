@@ -421,7 +421,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // mapView에 있는 annotations의 값이 DriverAnnotation 클래스와 같으면
             // annotation과 User의 위치에 맞게 지도 확대
             let annotations = self.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
-            self.mapView.showAnnotations(annotations, animated: true)
+            // - self.mapView.showAnnotations(annotations, animated: true)
+            self.mapView.zoomToFit(annotations: annotations)
             
             self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
         }
