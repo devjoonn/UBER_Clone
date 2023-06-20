@@ -41,4 +41,8 @@ struct Service {
             })
         }
     }
+    
+    func uploadTrip() {
+        
+    }
 }

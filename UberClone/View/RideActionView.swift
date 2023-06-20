@@ -9,8 +9,14 @@ import UIKit
 import SnapKit
 import MapKit
 
+protocol RideActionViewDelegate: class {
+    func uploadTrip()
+}
+
 class RideActionView: UIView {
 
+    weak var delegate: RideActionViewDelegate?
+    
 //MARK: - Properties
     var destination: MKPlacemark? {
         didSet {
@@ -128,7 +134,7 @@ class RideActionView: UIView {
 
 //MARK: - Handler
     @objc func actionButtonPress() {
-        print("DEBUG: 12")
+        delegate?.uploadTrip() 
     }
     
 }
