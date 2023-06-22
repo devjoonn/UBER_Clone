@@ -43,6 +43,6 @@ struct Service {
     }
     
     func uploadTrip() {
-        
+        print("DEBUG: Handle upload Trip()")
     }
 }

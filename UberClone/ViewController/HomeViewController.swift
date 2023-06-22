@@ -208,6 +208,7 @@ class HomeViewController: UIViewController {
     
     func configureRideActionView() {
         view.addSubview(rideActionView)
+        rideActionView.delegate = self
         
         // tableView의 frame과 같음
         rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
@@ -428,4 +429,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+}
+
+//MARK: - RideActionView Delegate
+extension HomeViewController: RideActionViewDelegate {
+    func uploadTrip() {
+        Service.shared.uploadTrip()
+    }
 }
