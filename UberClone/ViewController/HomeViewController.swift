@@ -433,7 +433,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: - RideActionView Delegate
 extension HomeViewController: RideActionViewDelegate {
-    func uploadTrip() {
-        Service.shared.uploadTrip()
+    func uploadTrip(_ view: RideActionView) {
+        // 현재 위치 & 선택 장소 위치
+        guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
+        guard let destinationCoordinates = view.destination?.coordinate else { return }
+        
+        Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (err, ref) in
+            if let err = err  {
+                print("DEBUG: Failed to upload trip with error \(err.localizedDescription)")
+            }
+            
+            print("DEBUG: Did upload Trip() 성공")
+        }
     }
 }

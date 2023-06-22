@@ -10,7 +10,7 @@ import SnapKit
 import MapKit
 
 protocol RideActionViewDelegate: class {
-    func uploadTrip()
+    func uploadTrip(_ view: RideActionView)
 }
 
 class RideActionView: UIView {
@@ -134,7 +134,7 @@ class RideActionView: UIView {
 
 //MARK: - Handler
     @objc func actionButtonPress() {
-        delegate?.uploadTrip() 
+        delegate?.uploadTrip(self) 
     }
     
 }
