@@ -8,5 +8,10 @@
 import CoreLocation
 
 struct Trip {
+    let pickupCoordinates: CLLocationCoordinate2D
+    let destinationCoordinates: CLLocationCoordinate2D
+    let passengerUid: String
+    var driverUid: String?
     
 }
+
