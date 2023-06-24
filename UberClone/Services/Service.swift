@@ -43,7 +43,7 @@ struct Service {
         }
     }
     
-    // 장소 선택 값 Firebase에 저장
+    // 현재 위치 & 선택 장소 위치 Firebase에 저장
     func uploadTrip(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) { // escaping -> updateChildValues 의 클로저 값 = (Error?, DatabaseReference)
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
