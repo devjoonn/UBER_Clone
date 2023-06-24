@@ -8,9 +8,9 @@
 import CoreLocation
 
 struct Trip {
-    var pickupCoordinates: CLLocationCoordinate2D
-    let destinationCoordinates: CLLocationCoordinate2D
-    let passengerUid: String
+    var pickupCoordinates: CLLocationCoordinate2D!
+    var destinationCoordinates: CLLocationCoordinate2D!
+    let passengerUid: String!
     var driverUid: String?
     var state: TripState!
     
@@ -21,8 +21,18 @@ struct Trip {
             guard let lat = pickupCoordinates[0] as? CLLocationDegrees else { return }
             guard let long = pickupCoordinates[1] as? CLLocationDegrees else { return }
             self.pickupCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            
-            
+        }
+        
+        if let destinationCoordinates = dictionary["destinationCoordinates"] as? NSArray {
+            guard let lat = destinationCoordinates[0] as? CLLocationDegrees else { return }
+            guard let long = destinationCoordinates[1] as? CLLocationDegrees else { return }
+            self.destinationCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        }
+        
+        self.driverUid = dictionary["driverUid"] as? String ?? ""
+        
+        if let state = dictionary["state"] as? Int {
+            self.state = TripState(rawValue: state)
         }
     }
 }
