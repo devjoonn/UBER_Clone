@@ -46,7 +46,15 @@ class HomeViewController: UIViewController {
             if user?.accountType == .passenger {
                 fetchDrivers() // driver 표시
                 configureLocationActivationView() // 주소 입력 창
+            } else {
+                observeTrips() // driver 시
             }
+        }
+    }
+    
+    private var trip: Trip? {
+        didSet {
+             print("DEBUG: Show pickup passenger controller..")
         }
     }
     
@@ -132,7 +140,12 @@ class HomeViewController: UIViewController {
                 self.mapView.addAnnotation(annotation)
             }
         }
-        
+    }
+    
+    func observeTrips() {
+        Service.shared.observeTrips { trip in
+            self.trip = trip
+        }
     }
     
     func signOut() {

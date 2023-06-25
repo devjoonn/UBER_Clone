@@ -55,7 +55,16 @@ struct Service {
                       "state": TripState.requested.rawValue] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
-        
-        
+    }
+    
+    // driver 시 현재 유저 위치 Firbase에 저장
+    func observeTrips(completion: @escaping(Trip) -> Void) {
+        REF_TRIPS.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            
+            let trip = Trip(passengerUid: uid, dictionary: dictionary)
+            completion(trip)
+        }
     }
 }
