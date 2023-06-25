@@ -44,7 +44,8 @@ class HomeViewController: UIViewController {
         didSet {
             locationInputView.user = user
             if user?.accountType == .passenger {
-                fetchDrivers()
+                fetchDrivers() // driver 표시
+                configureLocationActivationView() // 주소 입력 창
             }
         }
     }
@@ -146,7 +147,14 @@ class HomeViewController: UIViewController {
     func setUIandConstraints() {
         configureMapView()
         configureRideActionView()
-        configureLocationActivationView()
+        
+        view.addSubview(actionButton)
+        actionButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.leading.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
+        }
+        
         configureTableView()
     }
     
@@ -165,7 +173,6 @@ class HomeViewController: UIViewController {
     // 홈 뷰에 있는 where to Bar and Menu
     func configureLocationActivationView() {
         view.addSubview(locationInputActivationView)
-        view.addSubview(actionButton)
         
         locationInputActivationView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -180,13 +187,9 @@ class HomeViewController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.locationInputActivationView.alpha = 1
         }
-        
-        actionButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.leading.equalToSuperview().inset(20)
-            make.width.height.equalTo(30)
-        }
     }
+    
+    
 
     
     // where to Bar를 누르면 나오는 View

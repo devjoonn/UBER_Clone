@@ -24,7 +24,7 @@ struct User {
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
         
-        if let index = dictionary["accountType"] as? Int {
+        if let index = dictionary["accountTypeIndex"] as? Int {
             self.accountType = AccountType(rawValue: index)
         }
     }
