@@ -41,7 +41,12 @@ class HomeViewController: UIViewController {
     
     private var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
-        didSet { locationInputView.user = user }
+        didSet {
+            locationInputView.user = user
+            if user?.accountType == .passenger {
+                fetchDrivers()
+            }
+        }
     }
     
     private let actionButton: UIButton = {
@@ -59,7 +64,6 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
         fetchUserData()
-        fetchDrivers()
     }
     
 //MARK: - Selector
@@ -101,8 +105,8 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // driver 위치 표시
     func fetchDrivers() {
-        print("DEBUG: HomeView called - fetchDriver")
         guard let location = locationManager?.location else { return }
         Service.shared.fetchDriver(location: location) { (driver) in //
             guard let coordinate = driver.location?.coordinate else { return } // Driver location (드라이버 좌표 업데이트 시 coordinate도 변경)
@@ -126,7 +130,6 @@ class HomeViewController: UIViewController {
             if !driverIsVisible {
                 self.mapView.addAnnotation(annotation)
             }
-            
         }
         
     }
@@ -183,8 +186,8 @@ class HomeViewController: UIViewController {
             make.leading.equalToSuperview().inset(20)
             make.width.height.equalTo(30)
         }
-        
     }
+
     
     // where to Bar를 누르면 나오는 View
     func configureLocationInputView() {
