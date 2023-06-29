@@ -9,6 +9,10 @@ import UIKit
 import MapKit
 import SnapKit
 
+protocol PickupViewControllerDelegate: class {
+    func didAcceptTrip(_ trip: Trip)
+}
+
 class PickupViewController: UIViewController {
 
 //MARK: - Properties
@@ -39,6 +43,8 @@ class PickupViewController: UIViewController {
         $0.addTarget(self, action: #selector(handleAcceptTrip), for: .touchUpInside)
         return $0
     }(UIButton())
+    
+    weak var delegate: PickupViewControllerDelegate?
     
 //MARK: - Life cycles
     
@@ -104,7 +110,7 @@ class PickupViewController: UIViewController {
 
     @objc func handleAcceptTrip() {
         Service.shared.acceptTrip(trip: trip) { (error, ref) in
-            self.dismiss(animated: true)
+            self.delegate?.didAcceptTrip(self.trip)
         }
     }
     

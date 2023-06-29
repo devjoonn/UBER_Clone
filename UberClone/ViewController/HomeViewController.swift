@@ -56,6 +56,7 @@ class HomeViewController: UIViewController {
         didSet {
             guard let trip = trip else { return }
             let controller = PickupViewController(trip: trip)
+            controller.delegate = self
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true)
         }
@@ -76,6 +77,11 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
         fetchUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let trip = trip else { return }
+        print("DEBUG: Trip state is \(trip.state)")
     }
     
 //MARK: - Selector
@@ -468,4 +474,16 @@ extension HomeViewController: RideActionViewDelegate {
             print("DEBUG: Did upload Trip() 성공")
         }
     }
+}
+
+//MARK: - PickupViewControllerDelegate
+extension HomeViewController: PickupViewControllerDelegate {
+    func didAcceptTrip(_ trip: Trip) {
+        // PickupView 기준 self
+        self.trip?.state = .accepted
+        
+        self.dismiss(animated: true)
+    }
+    
+    
 }
