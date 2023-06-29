@@ -103,7 +103,9 @@ class PickupViewController: UIViewController {
     }
 
     @objc func handleAcceptTrip() {
-        print("DEBUG: accept Trip")
+        Service.shared.acceptTrip(trip: trip) { (error, ref) in
+            self.dismiss(animated: true)
+        }
     }
     
 }

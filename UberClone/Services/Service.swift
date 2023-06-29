@@ -67,4 +67,13 @@ struct Service {
             completion(trip)
         }
     }
+    
+    // PickupView에서 accept한 경우
+    func acceptTrip(trip: Trip, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let value = ["driverUid": uid,
+                     "state": TripState.accepted.rawValue] as [String : Any]
+        
+        REF_TRIPS.child(trip.passengerUid).updateChildValues(value, withCompletionBlock: completion)
+    }
 }
