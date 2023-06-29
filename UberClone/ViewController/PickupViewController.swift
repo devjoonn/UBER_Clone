@@ -55,7 +55,7 @@ class PickupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        configureMapView() 
+        configureMapView()
     }
     
 //MARK: - Helper Functions
@@ -63,10 +63,10 @@ class PickupViewController: UIViewController {
         let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: false)
         
-        let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
         let anno = MKPointAnnotation()
         anno.coordinate = trip.pickupCoordinates
         mapView.addAnnotation(anno)
+        self.mapView.selectAnnotation(anno, animated: true)
     }
     
 //MARK: - Configure UI
