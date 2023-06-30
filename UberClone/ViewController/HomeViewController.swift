@@ -46,6 +46,7 @@ class HomeViewController: UIViewController {
             if user?.accountType == .passenger {
                 fetchDrivers() // driver 표시
                 configureLocationActivationView() // 주소 입력 창
+                observeCurrentTrip() // 현재 유저의 상태 변경 
             } else {
                 observeTrips() // driver 시
             }
@@ -115,6 +116,12 @@ class HomeViewController: UIViewController {
     }
     
 //MARK: - Firebase API
+    
+    func observeCurrentTrip() {
+        Service.shared.observeCurrentTrip { trip in
+            self.trip = trip
+        }
+    }
     
     func fetchUserData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
