@@ -55,11 +55,17 @@ class HomeViewController: UIViewController {
     
     private var trip: Trip? {
         didSet {
-            guard let trip = trip else { return }
-            let controller = PickupViewController(trip: trip)
-            controller.delegate = self
-            controller.modalPresentationStyle = .fullScreen
-            self.present(controller, animated: true)
+            guard let user = user else { return }
+            
+            if user.accountType == .driver {
+                guard let trip = trip else { return }
+                let controller = PickupViewController(trip: trip)
+                controller.delegate = self
+                controller.modalPresentationStyle = .fullScreen
+                self.present(controller, animated: true)
+            } else {
+                print("DEBUG: trip을 적용하기 위해 actionView 띄우기")
+            }
         }
     }
     
@@ -161,6 +167,7 @@ class HomeViewController: UIViewController {
     func observeTrips() {
         Service.shared.observeTrips { trip in
             self.trip = trip
+
         }
     }
     
