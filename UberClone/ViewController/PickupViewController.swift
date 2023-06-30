@@ -20,6 +20,7 @@ class PickupViewController: UIViewController {
         $0.layer.cornerRadius = 270 / 2
         return $0
     }(MKMapView())
+    
     let trip: Trip
     
     private let cancelButton: UIButton = {
