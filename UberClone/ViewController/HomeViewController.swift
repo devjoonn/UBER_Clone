@@ -126,6 +126,11 @@ class HomeViewController: UIViewController {
     func observeCurrentTrip() {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
+            
+            if trip.state == .accepted {
+                print("DEBUG: trip.state = .accepted")
+                self.shouldPresentLoadingView(false)
+            }
         }
     }
     
@@ -167,7 +172,6 @@ class HomeViewController: UIViewController {
     func observeTrips() {
         Service.shared.observeTrips { trip in
             self.trip = trip
-
         }
     }
     

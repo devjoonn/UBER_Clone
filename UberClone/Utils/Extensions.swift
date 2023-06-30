@@ -136,8 +136,8 @@ extension UIViewController {
             label.alpha = 0.7
             
             view.addSubview(loadingView)
-            view.addSubview(indicator)
-            view.addSubview(label)
+            loadingView.addSubview(indicator)
+            loadingView.addSubview(label)
             
             label.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
@@ -150,14 +150,15 @@ extension UIViewController {
                 loadingView.alpha = 0.7
             }
         } else {
+            print("loadingView 꺼짐")
             view.subviews.forEach { (subview) in
+                print(subview.tag)
                 if subview.tag == 1 {
-                    UIView.animate(withDuration: 0.3) {
+                    UIView.animate(withDuration: 0.3, animations: {
                         subview.alpha = 0
-                    } completion: { _ in
+                    }, completion: { _ in
                         subview.removeFromSuperview()
-                    }
-
+                    })
                 }
             }
         }
