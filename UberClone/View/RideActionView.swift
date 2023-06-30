@@ -55,8 +55,9 @@ enum ButtonAction {
 class RideActionView: UIView {
 
     weak var delegate: RideActionViewDelegate?
-    
-//MARK: - Properties
+    var config = RideActionViewConfiguration()
+    var buttonAction = ButtonAction()
+
     var destination: MKPlacemark? {
         didSet {
             titleLabel.text = destination?.name
@@ -64,6 +65,7 @@ class RideActionView: UIView {
         }
     }
     
+//MARK: - Properties
     private let titleLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 18)
         $0.text = "Test Address Title"
@@ -176,4 +178,9 @@ class RideActionView: UIView {
         delegate?.uploadTrip(self) 
     }
     
+    
+//MARK: - Helper
+    func configureUI(withConfig config: RideActionViewConfiguration) {
+        
+    }
 }
