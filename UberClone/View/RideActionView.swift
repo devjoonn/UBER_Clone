@@ -181,6 +181,20 @@ class RideActionView: UIView {
     
 //MARK: - Helper
     func configureUI(withConfig config: RideActionViewConfiguration) {
-        
+        switch config {
+        case .requestRide:
+            break
+        case .tripAccepted:
+            titleLabel.text = "En Route To passenger"
+            buttonAction = .getDirections
+            actionButton.setTitle(buttonAction.description, for: .normal)
+            break
+        case .pickupPassenger:
+            break
+        case .tripInProgress:
+            break
+        case .endTrip:
+            break
+        }
     }
 }
