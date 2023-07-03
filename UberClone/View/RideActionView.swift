@@ -176,7 +176,19 @@ class RideActionView: UIView {
 
 //MARK: - Handler
     @objc func actionButtonPress() {
-        delegate?.uploadTrip(self) 
+        
+        switch buttonAction {
+        case .requestRide:
+            delegate?.uploadTrip(self)
+        case .cancel:
+            print("DEBUG: cancel")
+        case .getDirections:
+            print("DEBUG: getDirections")
+        case .pickup:
+            print("DEBUG: pickup")
+        case .dropOff:
+            print("DEBUG: dropOff")
+        }
     }
     
     
