@@ -57,6 +57,7 @@ class RideActionView: UIView {
     weak var delegate: RideActionViewDelegate?
     var config = RideActionViewConfiguration()
     var buttonAction = ButtonAction()
+    var user: User?
 
     var destination: MKPlacemark? {
         didSet {
@@ -184,10 +185,18 @@ class RideActionView: UIView {
              buttonAction = .requestRide
              actionButton.setTitle(buttonAction.description, for: .normal)
         case .tripAccepted:
-            titleLabel.text = "En Route To passenger"
-            buttonAction = .getDirections
-            actionButton.setTitle(buttonAction.description, for: .normal)
-            break
+             guard let user = user else { return }
+             
+             if user.accountType == .passenger {
+                 titleLabel.text = "En Route To passenger"
+                 buttonAction = .getDirections
+                 actionButton.setTitle(buttonAction.description, for: .normal)
+             } else {
+                 buttonAction = .cancel
+                 actionButton.setTitle(buttonAction.description, for: .normal)
+                 titleLabel.text = "Driver En Route"
+             }
+                
         case .pickupPassenger:
             break
         case .tripInProgress:

@@ -123,15 +123,17 @@ class HomeViewController: UIViewController {
     
 //MARK: - Firebase API
     
-    // driver -> rider 위치로 이동
     func observeCurrentTrip() {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
             
             if trip.state == .accepted {
-                print("DEBUG: trip.state = .accepted")
                 self.shouldPresentLoadingView(false)
-                self.animateRideActionView(shouldShow: true, config: .tripAccepted)
+                guard let driverUid = trip.driverUid else { return }
+                
+                Service.shared.fatchUserData(uid: driverUid) { driver in
+                    self.animateRideActionView(shouldShow: true, config: .tripAccepted, user: driver)
+                }
             }
         }
     }
@@ -288,7 +290,7 @@ class HomeViewController: UIViewController {
     }
     
     // rideActionView y값으로 가시성 조절 - didselect 시 true 반환 / 뒤로가기 시 false 반환
-    func animateRideActionView(shouldShow: Bool, destination: MKPlacemark? = nil, config: RideActionViewConfiguration? = nil) {
+    func animateRideActionView(shouldShow: Bool, destination: MKPlacemark? = nil, config: RideActionViewConfiguration? = nil, user: User? = nil) {
         let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight : self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
@@ -297,10 +299,15 @@ class HomeViewController: UIViewController {
         
         if shouldShow {
             guard let config = config else { return }
-            rideActionView.configureUI(withConfig: config)
             
-            guard let destination = destination else { return }
-            self.rideActionView.destination = destination
+            if let destination = destination {
+                self.rideActionView.destination = destination
+            }
+            if let user = user {
+                rideActionView.user = user
+            }
+            
+            rideActionView.configureUI(withConfig: config)
         }
     }
 }
@@ -518,7 +525,9 @@ extension HomeViewController: PickupViewControllerDelegate {
         
         // PickupView 기준 self
         self.dismiss(animated: true) {
-            self.animateRideActionView(shouldShow: true, config: .tripAccepted)
+            Service.shared.fatchUserData(uid: trip.passengerUid) { passenger in
+                self.animateRideActionView(shouldShow: true, config: .tripAccepted, user: passenger)
+            }
         }
     }
 }
