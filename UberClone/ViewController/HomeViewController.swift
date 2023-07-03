@@ -123,6 +123,7 @@ class HomeViewController: UIViewController {
     
 //MARK: - Firebase API
     
+    // driver -> rider 위치로 이동
     func observeCurrentTrip() {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
@@ -130,6 +131,7 @@ class HomeViewController: UIViewController {
             if trip.state == .accepted {
                 print("DEBUG: trip.state = .accepted")
                 self.shouldPresentLoadingView(false)
+                self.animateRideActionView(shouldShow: true, config: .tripAccepted)
             }
         }
     }
@@ -474,7 +476,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // - self.mapView.showAnnotations(annotations, animated: true)
             self.mapView.zoomToFit(annotations: annotations)
             
-            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
+            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark, config: .requestRide)
         }
     }
 
