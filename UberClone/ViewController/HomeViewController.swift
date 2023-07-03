@@ -507,6 +507,17 @@ extension HomeViewController: RideActionViewDelegate {
             }
         }
     }
+    
+    func cancelTrip() {
+        Service.shared.cancelTrip { (error, ref) in
+            if let error = error {
+                print("DEBUG: Trip 삭제 중 에러")
+                return
+            }
+            
+            self.animateRideActionView(shouldShow: false)
+        }
+    }
 }
 
 //MARK: - PickupViewControllerDelegate
