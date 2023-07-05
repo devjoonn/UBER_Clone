@@ -362,6 +362,13 @@ private extension HomeViewController {
             mapView.removeOverlay(mapView.overlays[0])
         }
     }
+    
+    // 확대 되었던 유저 location - Zoom out
+    func centerMapOnUserLocation() {
+        guard let coordinate = locationManager?.location?.coordinate else { return }
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 2000, longitudinalMeters: 2000)
+        mapView.setRegion(region, animated: true)
+    }
 }
 
 //MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
@@ -515,6 +522,7 @@ extension HomeViewController: RideActionViewDelegate {
                 return
             }
             
+            self.centerMapOnUserLocation()
             self.animateRideActionView(shouldShow: false)
             self.removeAnnotationAndOverlays()
             
@@ -524,7 +532,7 @@ extension HomeViewController: RideActionViewDelegate {
     }
 }
 
-//MARK: - PickupViewControllerDelegate
+//MARK: - PickupViewControllerDelegate - Driver
 extension HomeViewController: PickupViewControllerDelegate {
     func didAcceptTrip(_ trip: Trip) {
         let anno = MKPointAnnotation()
@@ -542,6 +550,7 @@ extension HomeViewController: PickupViewControllerDelegate {
         Service.shared.observeTripCancelled(trip: trip, completion: {
             self.removeAnnotationAndOverlays()
             self.animateRideActionView(shouldShow: false)
+            self.centerMapOnUserLocation()
         })
         
         // PickupView 기준 self
