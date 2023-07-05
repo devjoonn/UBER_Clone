@@ -551,6 +551,7 @@ extension HomeViewController: PickupViewControllerDelegate {
             self.removeAnnotationAndOverlays()
             self.animateRideActionView(shouldShow: false)
             self.centerMapOnUserLocation()
+            self.presentAlertController(withTitle: "Oops!", message: "The Passenger has decided to cancel this ride. Press Ok to continue.")
         })
         
         // PickupView 기준 self
