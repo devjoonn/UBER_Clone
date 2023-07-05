@@ -373,6 +373,15 @@ private extension HomeViewController {
 
 //MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
 extension HomeViewController: MKMapViewDelegate {
+    // mapView 실시간 업데이트
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        // 오직 driver 일 때만
+        guard let user = self.user else { return }
+        guard user.accountType == .driver else { return }
+        guard let location = userLocation.location else { return }
+        Service.shared.updateDriverLocaton(location: location)
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? DriverAnnotation {
             let view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIndentifier)

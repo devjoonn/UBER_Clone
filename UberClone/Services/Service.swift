@@ -103,4 +103,13 @@ struct Service {
         
         REF_TRIPS.child(uid).removeValue(completionBlock: completion)
     }
+    
+    // Driver의 위치 실시간 공유
+    func updateDriverLocaton(location: CLLocation) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let geoFire  = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+        geoFire.setLocation(location, forKey: uid)
+        
+        
+    }
 }
