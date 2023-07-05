@@ -68,6 +68,14 @@ struct Service {
         }
     }
     
+    // rider가 매칭 cancel 시 trip 삭제
+    func observeTripCancelled(trip: Trip, completion: @escaping () -> Void) {
+        REF_TRIPS.child(trip.passengerUid).observeSingleEvent(of: .childRemoved) { _ in
+            completion()
+        }
+            
+    }
+    
     // PickupView에서 accept한 경우
     func acceptTrip(trip: Trip, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }

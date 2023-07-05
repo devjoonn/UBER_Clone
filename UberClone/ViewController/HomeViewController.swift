@@ -534,6 +534,12 @@ extension HomeViewController: PickupViewControllerDelegate {
         
         mapView.zoomToFit(annotations: mapView.annotations)
         
+        // rider 매칭 취소 시 driver -> rider에게 가는 polyline, RideActionView 사라짐
+        Service.shared.observeTripCancelled(trip: trip, completion: {
+            self.removeAnnotationAndOverlays()
+            self.animateRideActionView(shouldShow: false)
+        })
+        
         // PickupView 기준 self
         self.dismiss(animated: true) {
             Service.shared.fatchUserData(uid: trip.passengerUid) { passenger in
