@@ -516,6 +516,10 @@ extension HomeViewController: RideActionViewDelegate {
             }
             
             self.animateRideActionView(shouldShow: false)
+            self.removeAnnotationAndOverlays()
+            
+            self.actionButton.setImage(UIImage(named: "baseline_menu_black"), for: .normal)
+            self.actionButtonConfig = .showMenu
         }
     }
 }
