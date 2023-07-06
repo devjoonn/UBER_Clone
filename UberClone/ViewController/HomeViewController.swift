@@ -558,7 +558,7 @@ extension HomeViewController: RideActionViewDelegate {
             self.actionButton.setImage(UIImage(named: "baseline_menu_black"), for: .normal)
             self.actionButtonConfig = .showMenu
             
-            self.locationInputActivationView.alpha = 0
+            self.locationInputActivationView.alpha = 1
         }
     }
 }
