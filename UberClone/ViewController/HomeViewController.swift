@@ -84,6 +84,7 @@ class HomeViewController: UIViewController {
         setUIandConstraints()
         enableLocationServices()
         fetchUserData()
+        centerMapOnUserLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -157,6 +158,7 @@ class HomeViewController: UIViewController {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         Service.shared.fatchUserData(uid: currentUid) { user in
             self.user = user
+            
         }
     }
     
