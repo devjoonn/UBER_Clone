@@ -135,6 +135,8 @@ class HomeViewController: UIViewController {
                 break
             case .accepted:
                 self.shouldPresentLoadingView(false)
+                self.removeAnnotationAndOverlays()
+                self.zoomForActiveTrip(withDriverUid: driverUid)
                 
                 Service.shared.fatchUserData(uid: driverUid) { driver in
                     self.animateRideActionView(shouldShow: true, config: .tripAccepted, user: driver)
@@ -172,6 +174,7 @@ class HomeViewController: UIViewController {
                     if driverAnnotation.uid == driver.uid {
                         // 드라이버 위치 갱신
                         driverAnnotation.updateAnnotationPosition(withCoordinate: coordinate)
+                        self.zoomForActiveTrip(withDriverUid: driver.uid)
                         print("DEBUG: Driver 위치 갱신")
                         return true
                     } else {
@@ -388,7 +391,24 @@ private extension HomeViewController {
         // locationManager가 해당 지역을 관찰
         let region = CLCircularRegion(center: coordinate, radius: 25, identifier: "pickup")
         locationManager?.startMonitoring(for: region)
+    }
+    
+    // annotation이 center에 위치하게 줌 인/아웃
+    func zoomForActiveTrip(withDriverUid  driverUid: String) {
+        var annotations = [MKAnnotation]()
         
+        self.mapView.annotations.forEach { (annotation) in
+            if let anno = annotation as? DriverAnnotation {
+                if anno.uid == driverUid {
+                    annotations.append(anno)
+                }
+            }
+            
+            if let userAnno = annotation as? MKUserLocation{
+                annotations.append(userAnno)
+            }
+        }
+        self.mapView.zoomToFit(annotations: annotations)
     }
 }
 
