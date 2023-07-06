@@ -437,7 +437,8 @@ extension HomeViewController: CLLocationManagerDelegate {
         print("DEBUG: Driver가 Passenger 위치에 도착")
         
         self.rideActionView.config = .pickupPassenger
-        
+        guard let trip = trip else { return }
+        Service.shared.updateTripState(trip: trip, state: .driverArrived)
     }
     
     func enableLocationServices() {
@@ -582,6 +583,8 @@ extension HomeViewController: RideActionViewDelegate {
 //MARK: - PickupViewControllerDelegate - Driver
 extension HomeViewController: PickupViewControllerDelegate {
     func didAcceptTrip(_ trip: Trip) {
+        self.trip = trip
+        
         let anno = MKPointAnnotation()
         anno.coordinate = trip.pickupCoordinates
         mapView.addAnnotation(anno)

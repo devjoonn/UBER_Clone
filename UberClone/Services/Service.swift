@@ -109,7 +109,10 @@ struct Service {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let geoFire  = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
         geoFire.setLocation(location, forKey: uid)
-        
-        
+    }
+    
+    // Trip 매칭의 State로 DB 데이터 변경
+    func updateTripState(trip: Trip, state: TripState) {
+        REF_TRIPS.child(trip.passengerUid).child("state").setValue(state.rawValue)
     }
 }
