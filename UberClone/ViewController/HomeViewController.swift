@@ -414,8 +414,14 @@ extension HomeViewController: MKMapViewDelegate {
 
 //MARK: CLLocationManagerDelegate - 위치 사용 권한 부여
 extension HomeViewController: CLLocationManagerDelegate {
+    // 모니터링 시작
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         print("DEBUG: 지역 모니터링 시작 - \(region)")
+    }
+    
+    // 모니터링하는 지역에 도착
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("DEBUG: Driver가 Passenger 위치에 도착")
     }
     
     func enableLocationServices() {
