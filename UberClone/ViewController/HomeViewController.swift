@@ -369,6 +369,14 @@ private extension HomeViewController {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 2000, longitudinalMeters: 2000)
         mapView.setRegion(region, animated: true)
     }
+    
+    // Driver가 Rider의 위치에 도착했을 때
+    func setCustomRegion(withCoordinate coordinate: CLLocationCoordinate2D) {
+        // locationManager가 해당 지역을 관찰
+        let region = CLCircularRegion(center: coordinate, radius: 25, identifier: "pickup")
+        locationManager?.startMonitoring(for: region)
+        
+    }
 }
 
 //MARK: - MKMapViewDelegate: Driver 마킹을 여러 개 X -> 단일화
@@ -404,9 +412,15 @@ extension HomeViewController: MKMapViewDelegate {
     }
 }
 
-//MARK: - 위치 사용 권한 부여
-extension HomeViewController {
+//MARK: CLLocationManagerDelegate - 위치 사용 권한 부여
+extension HomeViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        print("DEBUG: 지역 모니터링 시작 - \(region)")
+    }
+    
     func enableLocationServices() {
+        locationManager?.delegate = self
+         
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: 위치 정보 없을 때 권한 정보 물음")
@@ -537,6 +551,8 @@ extension HomeViewController: RideActionViewDelegate {
             
             self.actionButton.setImage(UIImage(named: "baseline_menu_black"), for: .normal)
             self.actionButtonConfig = .showMenu
+            
+            self.locationInputActivationView.alpha = 0
         }
     }
 }
@@ -548,6 +564,8 @@ extension HomeViewController: PickupViewControllerDelegate {
         anno.coordinate = trip.pickupCoordinates
         mapView.addAnnotation(anno)
         mapView.selectAnnotation(anno, animated: true)
+        
+        setCustomRegion(withCoordinate: trip.pickupCoordinates)
         
         let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
