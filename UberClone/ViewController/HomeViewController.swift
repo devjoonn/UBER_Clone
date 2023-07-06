@@ -126,14 +126,27 @@ class HomeViewController: UIViewController {
     func observeCurrentTrip() {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
+            guard let state = trip.state else { return }
+            guard let driverUid = trip.driverUid else { return }
             
-            if trip.state == .accepted {
+            switch state {
+                
+            case .requested:
+                break
+            case .accepted:
                 self.shouldPresentLoadingView(false)
-                guard let driverUid = trip.driverUid else { return }
                 
                 Service.shared.fatchUserData(uid: driverUid) { driver in
                     self.animateRideActionView(shouldShow: true, config: .tripAccepted, user: driver)
                 }
+            case .driverArrived:
+                self.rideActionView.config = .driverArrived
+                
+                
+            case .inProgress:
+                break
+            case .completed:
+                break
             }
         }
     }
