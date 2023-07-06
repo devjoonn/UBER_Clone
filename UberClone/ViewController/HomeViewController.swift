@@ -307,7 +307,7 @@ class HomeViewController: UIViewController {
                 rideActionView.user = user
             }
             
-            rideActionView.configureUI(withConfig: config)
+            rideActionView.config = config
         }
     }
 }
@@ -422,6 +422,9 @@ extension HomeViewController: CLLocationManagerDelegate {
     // 모니터링하는 지역에 도착
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         print("DEBUG: Driver가 Passenger 위치에 도착")
+        
+        self.rideActionView.config = .pickupPassenger
+        
     }
     
     func enableLocationServices() {
