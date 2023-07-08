@@ -154,6 +154,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    
     func fetchUserData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         Service.shared.fatchUserData(uid: currentUid) { user in
@@ -549,10 +550,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         // locationView 사라지며 선택한 주소 값을 marking
         dismissLocationView { _ in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = selectedPlacemark.coordinate
-            self.mapView.addAnnotation(annotation)
-            self.mapView.selectAnnotation(annotation, animated: true)
+            //MARK: 리펙토링 할 것
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = selectedPlacemark.coordinate
+//            self.mapView.addAnnotation(annotation)
+//            self.mapView.selectAnnotation(annotation, animated: true)
             
             // mapView에 있는 annotations의 값이 DriverAnnotation 클래스와 같으면
             // annotation과 User의 위치에 맞게 지도 확대

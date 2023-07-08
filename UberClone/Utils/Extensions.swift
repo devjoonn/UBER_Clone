@@ -113,6 +113,14 @@ extension MKMapView {
         let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
         setVisibleMapRect(zoomRect, edgePadding: insets, animated: true)
     }
+    
+    // annotation 추가하고 select 상태로 변경
+    func addAnnotationAndSelect(forPlaceMark placeMark: MKPlacemark) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placeMark.coordinate
+        addAnnotation(annotation)
+        selectAnnotation(annotation, animated: true)
+    }
 }
 
 extension UIViewController {
