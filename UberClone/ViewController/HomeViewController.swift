@@ -154,6 +154,21 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // pickup 후 목적지 까지
+    func startTrip() {
+        guard let trip = trip else { return }
+        
+        Service.shared.updateTripState(trip: trip, state: .inProgress) {  (error, ref) in
+            self.rideActionView.config = .tripInProgress
+            self.removeAnnotationAndOverlays()
+            self.mapView.addAnnotationAndSelect(forCoordinate: trip.destinationCoordinates)
+            
+            let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
+            let mapItem = MKMapItem(placemark: placeMark)
+            
+            self.generatePolyline(toDestination: mapItem)
+        }
+    }
     
     func fetchUserData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -600,6 +615,10 @@ extension HomeViewController: RideActionViewDelegate {
             self.locationInputActivationView.alpha = 1
         }
     }
+    
+    func pickupPassenger() {
+        startTrip()
+    }
 }
 
 //MARK: - PickupViewControllerDelegate - Driver
@@ -610,7 +629,7 @@ extension HomeViewController: PickupViewControllerDelegate {
         
         setCustomRegion(withCoordinate: trip.pickupCoordinates)
         
-        let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
+        let placeMark = MKPlacemark(coordinate: trip.destinationCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
         generatePolyline(toDestination: mapItem)
         
