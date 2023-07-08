@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         didSet {
             locationInputView.user = user
             if user?.accountType == .passenger {
-                fetchDrivers() // driver 표시
+                fetchDrivers() // mapView에 driver 표시
                 configureLocationActivationView() // 주소 입력 창
                 observeCurrentTrip() // 현재 유저의 상태 변경 
             } else {
@@ -460,7 +460,9 @@ extension HomeViewController: CLLocationManagerDelegate {
         
         self.rideActionView.config = .pickupPassenger
         guard let trip = trip else { return }
-        Service.shared.updateTripState(trip: trip, state: .driverArrived)
+        Service.shared.updateTripState(trip: trip, state: .driverArrived) { (error, ref) in
+            self.rideActionView.config = .pickupPassenger
+        }
     }
     
     func enableLocationServices() {

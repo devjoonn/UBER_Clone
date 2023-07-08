@@ -112,7 +112,7 @@ struct Service {
     }
     
     // Trip 매칭의 State로 DB 데이터 변경
-    func updateTripState(trip: Trip, state: TripState) {
-        REF_TRIPS.child(trip.passengerUid).child("state").setValue(state.rawValue)
+    func updateTripState(trip: Trip, state: TripState, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        REF_TRIPS.child(trip.passengerUid).child("state").setValue(state.rawValue, withCompletionBlock: completion)
     }
 }
