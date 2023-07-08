@@ -550,11 +550,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         // locationView 사라지며 선택한 주소 값을 marking
         dismissLocationView { _ in
-            //MARK: 리펙토링 할 것
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = selectedPlacemark.coordinate
-//            self.mapView.addAnnotation(annotation)
-//            self.mapView.selectAnnotation(annotation, animated: true)
+            self.mapView.addAnnotationAndSelect(forCoordinate: selectedPlacemark.coordinate)
             
             // mapView에 있는 annotations의 값이 DriverAnnotation 클래스와 같으면
             // annotation과 User의 위치에 맞게 지도 확대
@@ -610,11 +606,7 @@ extension HomeViewController: RideActionViewDelegate {
 extension HomeViewController: PickupViewControllerDelegate {
     func didAcceptTrip(_ trip: Trip) {
         self.trip = trip
-        
-        let anno = MKPointAnnotation()
-        anno.coordinate = trip.pickupCoordinates
-        mapView.addAnnotation(anno)
-        mapView.selectAnnotation(anno, animated: true)
+        self.mapView.addAnnotationAndSelect(forCoordinate: trip.pickupCoordinates)
         
         setCustomRegion(withCoordinate: trip.pickupCoordinates)
         

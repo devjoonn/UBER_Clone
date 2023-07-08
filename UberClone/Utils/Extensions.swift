@@ -115,9 +115,9 @@ extension MKMapView {
     }
     
     // annotation 추가하고 select 상태로 변경
-    func addAnnotationAndSelect(forPlaceMark placeMark: MKPlacemark) {
+    func addAnnotationAndSelect(forCoordinate coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = placeMark.coordinate
+        annotation.coordinate = coordinate
         addAnnotation(annotation)
         selectAnnotation(annotation, animated: true)
     }
