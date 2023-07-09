@@ -145,9 +145,8 @@ class HomeViewController: UIViewController {
             case .driverArrived:
                 self.rideActionView.config = .driverArrived
                 
-                
             case .inProgress:
-                break
+                self.rideActionView.config = .tripInProgress
             case .completed:
                 break
             }
