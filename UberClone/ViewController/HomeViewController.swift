@@ -639,7 +639,13 @@ extension HomeViewController: RideActionViewDelegate {
     }
     
     func dropOffPassenger() {
-        
+        guard let trip = trip else { return }
+        Service.shared.updateTripState(trip: trip, state: .completed) { (error, ref) in
+            self.removeAnnotationAndOverlays()
+            self.centerMapOnUserLocation()
+            self.animateRideActionView(shouldShow: false)
+            
+        }
     }
 }
 
