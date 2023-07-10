@@ -154,7 +154,11 @@ class HomeViewController: UIViewController {
             case .arrivedAtDestination:
                 self.rideActionView.config = .endTrip
             case .completed:
-                break
+                self.animateRideActionView(shouldShow: false)
+                self.centerMapOnUserLocation()
+                self.configureActionButton(config: .showMenu)
+                self.presentAlertController(withTitle: "Trip Completed", message: "We hope you enjoyed your trip")
+                
             }
         }
     }
