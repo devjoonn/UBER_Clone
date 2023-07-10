@@ -167,11 +167,10 @@ class HomeViewController: UIViewController {
             self.removeAnnotationAndOverlays()
             self.mapView.addAnnotationAndSelect(forCoordinate: trip.destinationCoordinates)
             
-            let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
+            let placeMark = MKPlacemark(coordinate: trip.destinationCoordinates)
             let mapItem = MKMapItem(placemark: placeMark)
             
             self.setCustomRegion(withType: .destination, coordinates: trip.destinationCoordinates)
-            
             self.generatePolyline(toDestination: mapItem)
         }
     }
@@ -641,7 +640,7 @@ extension HomeViewController: PickupViewControllerDelegate {
         
         setCustomRegion(withType: .pickup, coordinates: trip.pickupCoordinates)
         
-        let placeMark = MKPlacemark(coordinate: trip.destinationCoordinates)
+        let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
         generatePolyline(toDestination: mapItem)
         
