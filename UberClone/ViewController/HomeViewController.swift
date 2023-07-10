@@ -149,11 +149,10 @@ class HomeViewController: UIViewController {
                 }
             case .driverArrived:
                 self.rideActionView.config = .driverArrived
-                
             case .inProgress:
                 self.rideActionView.config = .tripInProgress
             case .arrivedAtDestination:
-                break
+                self.rideActionView.config = .endTrip
             case .completed:
                 break
             }
@@ -637,6 +636,10 @@ extension HomeViewController: RideActionViewDelegate {
     
     func pickupPassenger() {
         startTrip()
+    }
+    
+    func dropOffPassenger() {
+        
     }
 }
 
