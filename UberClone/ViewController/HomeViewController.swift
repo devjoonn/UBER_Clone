@@ -473,7 +473,13 @@ extension HomeViewController: MKMapViewDelegate {
 extension HomeViewController: CLLocationManagerDelegate {
     // 모니터링 시작
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
-        print("DEBUG: 지역 모니터링 시작 - \(region)")
+        if region.identifier == AnnotationType.pickup.rawValue {
+            print("DEBUG: pickup 지역 모니터링 시작 - \(region)")
+        }
+        
+        if region.identifier == AnnotationType.destination.rawValue {
+            print("DEBUG: destination 지역 모니터링 시작 - \(region)")
+        }
     }
     
     // 모니터링하는 지역에 도착
