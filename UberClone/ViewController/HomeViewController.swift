@@ -170,6 +170,8 @@ class HomeViewController: UIViewController {
             let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
             let mapItem = MKMapItem(placemark: placeMark)
             
+            self.setCustomRegion(withType: .destination, coordinates: trip.destinationCoordinates)
+            
             self.generatePolyline(toDestination: mapItem)
         }
     }
@@ -409,9 +411,9 @@ private extension HomeViewController {
     }
     
     // Driver가 Rider의 위치에 도착했을 때
-    func setCustomRegion(withCoordinate coordinate: CLLocationCoordinate2D) {
+    func setCustomRegion(withType type: AnnotationType, coordinates: CLLocationCoordinate2D) {
         // locationManager가 해당 지역을 관찰
-        let region = CLCircularRegion(center: coordinate, radius: 25, identifier: "pickup")
+        let region = CLCircularRegion(center: coordinates, radius: 25, identifier: type.rawValue)
         locationManager?.startMonitoring(for: region)
     }
     
@@ -631,7 +633,7 @@ extension HomeViewController: PickupViewControllerDelegate {
         self.trip = trip
         self.mapView.addAnnotationAndSelect(forCoordinate: trip.pickupCoordinates)
         
-        setCustomRegion(withCoordinate: trip.pickupCoordinates)
+        setCustomRegion(withType: .pickup, coordinates: trip.pickupCoordinates)
         
         let placeMark = MKPlacemark(coordinate: trip.destinationCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
