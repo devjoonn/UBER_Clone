@@ -23,6 +23,11 @@ private enum ActionButtonConfiguration {
     }
 }
 
+private enum AnnotationType: String {
+    case pickup
+    case destination
+}
+
 class HomeViewController: UIViewController {
 
 //MARK: - UI Components
