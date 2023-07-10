@@ -494,7 +494,9 @@ extension HomeViewController: CLLocationManagerDelegate {
         }
         
         if region.identifier == AnnotationType.destination.rawValue {
-            print("DEBUG: destination 지역 모니터링 시작 - \(region)")
+            Service.shared.updateTripState(trip: trip, state: .arrivedAtDestination) { (error, ref) in
+                self.rideActionView.config = .endTrip
+            }
         }
     }
     
