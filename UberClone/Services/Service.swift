@@ -97,7 +97,7 @@ struct Service {
         }
     }
     
-    // trip Cancel 취소
+    // trip 삭제
     func deleteTrip(completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -114,5 +114,10 @@ struct Service {
     // Trip 매칭의 State로 DB 데이터 변경
     func updateTripState(trip: Trip, state: TripState, completion: @escaping(Error?, DatabaseReference) -> Void) {
         REF_TRIPS.child(trip.passengerUid).child("state").setValue(state.rawValue, withCompletionBlock: completion)
+        
+        // .completed 시 옵저버 삭제해야 trip을 안전하게 취소하고 완료하는 것도 가능 - 없을 시 .completed 처리 X
+        if state == .completed {
+            REF_TRIPS.child(trip.passengerUid).removeAllObservers()
+        }
     }
 }

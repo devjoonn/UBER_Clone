@@ -160,6 +160,7 @@ class HomeViewController: UIViewController {
                     self.animateRideActionView(shouldShow: false)
                     self.centerMapOnUserLocation()
                     self.configureActionButton(config: .showMenu)
+                    self.locationInputActivationView.alpha = 1
                     self.presentAlertController(withTitle: "Trip Completed", message: "We hope you enjoyed your trip")
                 }
             }
