@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
         } else {
             print("DEBUG: 유저 로그인 중! - 유저 아이디: \(String(describing: Auth.auth().currentUser?.uid))")
-            window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+            window?.rootViewController = UINavigationController(rootViewController: ContainerViewController())
             
         }
     }
