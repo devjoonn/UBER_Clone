@@ -130,6 +130,7 @@ class HomeViewController: UIViewController {
     
 //MARK: - Passenger API
     func observeCurrentTrip() {
+        // TripState 별
         PassengerService.shared.observeCurrentTrip { trip in
             self.trip = trip
             guard let state = trip.state else { return }

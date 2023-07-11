@@ -19,7 +19,7 @@ let REF_TRIPS = DB_REF.child("trips")
 struct DriverService {
     static let shared = DriverService()
     
-    // driver 시 현재 유저 위치 Firbase에 저장
+    // 현재 유저 위치 Firbase에 저장해서 trip으로 반환
     func observeTrips(completion: @escaping(Trip) -> Void) {
         REF_TRIPS.observe(.childAdded) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
@@ -121,7 +121,6 @@ struct PassengerService {
 
 //MARK: - Shared Service API
 struct Service {
-    
     static let shared = Service()
     
     // 공통 로그인한 유저 정보 불러오기
