@@ -130,6 +130,7 @@ class HomeViewController: UIViewController {
     
 //MARK: - Firebase API
     
+    //Rider
     func observeCurrentTrip() {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
@@ -155,11 +156,12 @@ class HomeViewController: UIViewController {
             case .arrivedAtDestination:
                 self.rideActionView.config = .endTrip
             case .completed:
-                self.animateRideActionView(shouldShow: false)
-                self.centerMapOnUserLocation()
-                self.configureActionButton(config: .showMenu)
-                self.presentAlertController(withTitle: "Trip Completed", message: "We hope you enjoyed your trip")
-                
+                Service.shared.deleteTrip { (error, ref) in
+                    self.animateRideActionView(shouldShow: false)
+                    self.centerMapOnUserLocation()
+                    self.configureActionButton(config: .showMenu)
+                    self.presentAlertController(withTitle: "Trip Completed", message: "We hope you enjoyed your trip")
+                }
             }
         }
     }
