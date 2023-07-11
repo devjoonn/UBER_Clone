@@ -23,6 +23,7 @@ private enum ActionButtonConfiguration {
     }
 }
 
+// pickup, destination Anno 구분
 private enum AnnotationType: String {
     case pickup
     case destination
@@ -177,6 +178,9 @@ class HomeViewController: UIViewController {
             
             self.setCustomRegion(withType: .destination, coordinates: trip.destinationCoordinates)
             self.generatePolyline(toDestination: mapItem)
+            
+            // 유저와 목적지가 한 번에 보이게 mapView 최적화
+            self.mapView.zoomToFit(annotations: self.mapView.annotations)
         }
     }
     
