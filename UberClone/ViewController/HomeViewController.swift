@@ -29,6 +29,10 @@ private enum AnnotationType: String {
     case destination
 }
 
+protocol HomeViewControllerDelegate: class {
+     func handleMenuToggle()
+}
+
 class HomeViewController: UIViewController {
 
 //MARK: - UI Components
@@ -44,6 +48,8 @@ class HomeViewController: UIViewController {
     private final let rideActionViewHeight: CGFloat = 300 // - 어디서든 수정 불가
     private var actionButtonConfig = ActionButtonConfiguration()
     private var route: MKRoute?
+    
+    weak var delegate: HomeViewControllerDelegate?
     
     private var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
@@ -102,7 +108,7 @@ class HomeViewController: UIViewController {
     @objc func actionButtonPressed() {
         switch actionButtonConfig {
         case .showMenu:
-            print("DEBUG : showMenu")
+            delegate?.handleMenuToggle()
         case .dismissActionView:
             removeAnnotationAndOverlays()
             mapView.showAnnotations(mapView.annotations, animated: true)
