@@ -12,6 +12,7 @@ class ContainerViewController: UIViewController {
 //MARK: - Properties
     private let homeViewController = HomeViewController()
     private let menuViewController = MenuViewController()
+    private var isExpanded = false
     
 //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -52,6 +53,7 @@ class ContainerViewController: UIViewController {
 
 extension ContainerViewController: HomeViewControllerDelegate {
     func handleMenuToggle() {
-        animateMenu(shouldExpand: true)
+        isExpanded.toggle()
+        animateMenu(shouldExpand: isExpanded)
     }
 }
