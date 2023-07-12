@@ -13,11 +13,11 @@ class ContainerViewController: UIViewController {
     private let homeViewController = HomeViewController()
     private let menuViewController = MenuViewController()
     
-    
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHomeViewController()
+        configureMenuViewController()
     }
     
 //MARK: - Helper Functions
@@ -36,10 +36,22 @@ class ContainerViewController: UIViewController {
         // menuViewController를 가장 앞에 삽입
         view.insertSubview(menuViewController.view, at: 0)
     }
+    
+    func animateMenu(shouldExpand: Bool) {
+        if shouldExpand {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.homeViewController.view.frame.origin.x = self.view.frame.width - 80
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                self.homeViewController.view.frame.origin.x = 0
+            })
+        }
+    }
 }
 
 extension ContainerViewController: HomeViewControllerDelegate {
     func handleMenuToggle() {
-        print("DEBUG: ContainerViewController - handleMenuToggle() 호출")
+        animateMenu(shouldExpand: true)
     }
 }
