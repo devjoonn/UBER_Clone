@@ -11,7 +11,7 @@ class ContainerViewController: UIViewController {
 
 //MARK: - Properties
     private let homeViewController = HomeViewController()
-    private var menuViewController: MenuViewController!
+    private let menuViewController = MenuViewController()
     
     
 //MARK: - Life Cycles
@@ -21,10 +21,17 @@ class ContainerViewController: UIViewController {
     }
     
 //MARK: - Helper Functions
+    // home이 postion 1
     func configureHomeViewController() {
         addChild(homeViewController)
         homeViewController.didMove(toParent: self)
         view.addSubview(homeViewController.view)
-        
+    }
+    
+    // menu가 position 0
+    func configureMenuViewController() {
+        addChild(menuViewController)
+        menuViewController.didMove(toParent: self)
+        view.insertSubview(menuViewController.view, at: 0)
     }
 }
