@@ -17,6 +17,7 @@ class ContainerViewController: UIViewController {
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .backgroundColor
         configureHomeViewController()
         configureMenuViewController()
     }

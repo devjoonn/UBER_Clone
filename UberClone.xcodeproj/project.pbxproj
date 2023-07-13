@@ -26,6 +26,7 @@
 		471145E22A111D7A00AED0DC /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471145E12A111D7A00AED0DC /* DriverAnnotation.swift */; };
 		472675EE2A5D78FC00ABEEA5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472675ED2A5D78FC00ABEEA5 /* MenuViewController.swift */; };
 		472675F02A5D791100ABEEA5 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472675EF2A5D791100ABEEA5 /* ContainerViewController.swift */; };
+		478C9FF42A5F930C000FA196 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478C9FF32A5F930C000FA196 /* MenuHeaderView.swift */; };
 		47A272852A30B35D005D7E26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47A272842A30B35D005D7E26 /* GoogleService-Info.plist */; };
 		47CC89642A46C28E0020246E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC89632A46C28E0020246E /* Trip.swift */; };
 		47CC89662A492EBE0020246E /* PickupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC89652A492EBE0020246E /* PickupViewController.swift */; };
@@ -55,6 +56,7 @@
 		471145E12A111D7A00AED0DC /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
 		472675ED2A5D78FC00ABEEA5 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		472675EF2A5D791100ABEEA5 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		478C9FF32A5F930C000FA196 /* MenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		47A272842A30B35D005D7E26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47CC89632A46C28E0020246E /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		47CC89652A492EBE0020246E /* PickupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				471145C92A0BB35600AED0DC /* LocationInputActivationView.swift */,
 				471145CB2A0CE39F00AED0DC /* LocationInputView.swift */,
 				47D15CDF2A3855C500B9CB85 /* RideActionView.swift */,
+				478C9FF32A5F930C000FA196 /* MenuHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				471145CC2A0CE39F00AED0DC /* LocationInputView.swift in Sources */,
 				471145D42A0E805C00AED0DC /* Service.swift in Sources */,
 				471145CA2A0BB35600AED0DC /* LocationInputActivationView.swift in Sources */,
+				478C9FF42A5F930C000FA196 /* MenuHeaderView.swift in Sources */,
 				471145932A03B4F700AED0DC /* AppDelegate.swift in Sources */,
 				471145AC2A03B58700AED0DC /* Extensions.swift in Sources */,
 				47CC89662A492EBE0020246E /* PickupViewController.swift in Sources */,
