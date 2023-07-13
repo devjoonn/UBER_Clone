@@ -11,6 +11,14 @@ import SnapKit
 class MenuHeaderView: UIView {
 
 //MARK: - properties
+    
+    var user: User? {
+        didSet {
+            fullnameLabel.text = user?.fullname
+            emailLabel.text = user?.email
+        }
+    }
+    
     private let profileImageView: UIImageView = {
         $0.backgroundColor = .lightGray
         $0.layer.cornerRadius = 64 / 2
