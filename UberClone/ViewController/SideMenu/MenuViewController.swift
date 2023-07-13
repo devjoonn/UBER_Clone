@@ -2,10 +2,11 @@
 //  MenuViewController.swift
 //  UberClone
 //
-//  Created by 박현준 on 2023/07/11.
+//  Created by 박현준 on 2023/07/13.
 //
 
 import UIKit
+import SnapKit
 
 private let reuseIdentifier = "MenuCell"
 
@@ -28,23 +29,28 @@ class MenuViewController: UIViewController {
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
+        menuTabelView.delegate = self
+        menuTabelView.dataSource = self
         configureTableView()
         setUIandConstraints()
  
-    } 
+    }
     
 //MARK: - Helper Functions
     func configureTableView() {
-        menuTabelView.delegate = self
-        menuTabelView.dataSource = self
         menuTabelView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         menuTabelView.tableHeaderView = menuHeaderView
     }
     
 //MARK: - set UI
     func setUIandConstraints() {
-        view.frame = menuTabelView.bounds
+        view.addSubview(menuTabelView)
+        
+        menuTabelView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -65,3 +71,4 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
