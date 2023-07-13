@@ -7,7 +7,9 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
+private let reuseIdentifier = "MenuCell"
+
+class MenuViewController: UITableViewController {
 
 //MARK: - Properties
     
@@ -21,6 +23,12 @@ class MenuViewController: UIViewController {
  
     }
 //MARK: - Helper Functions
-    
+    func configureTableView() {
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.rowHeight = 60
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+    }
     
 }
