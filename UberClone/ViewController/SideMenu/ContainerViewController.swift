@@ -18,7 +18,7 @@ class ContainerViewController: UIViewController {
     private var user: User? {
         didSet {
             guard let user = user else { return }
-            configureHomeViewController(withUser: user)
+            homeViewController.user = user
             configureMenuViewController(withUser: user)
         }
     }
@@ -28,6 +28,7 @@ class ContainerViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
         fetchUserData()
+        configureHomeViewController()
     }
     
 //MARK: - API
@@ -41,12 +42,12 @@ class ContainerViewController: UIViewController {
     
 //MARK: - Helper Functions
     // home이 postion 1
-    func configureHomeViewController(withUser user: User) {
+    func configureHomeViewController() {
         addChild(homeViewController)
         homeViewController.didMove(toParent: self)
         view.addSubview(homeViewController.view)
         homeViewController.delegate = self
-        homeViewController.user = user
+        
     }
     
     // menu가 position 0
