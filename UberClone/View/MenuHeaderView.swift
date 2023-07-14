@@ -11,7 +11,6 @@ import SnapKit
 class MenuHeaderView: UIView {
 
 //MARK: - properties
-    
     var user: User? {
         didSet {
             fullnameLabel.text = user?.fullname

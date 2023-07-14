@@ -13,6 +13,12 @@ private let reuseIdentifier = "MenuCell"
 class MenuViewController: UIViewController {
 
 //MARK: - Properties
+    var user: User? {
+        didSet {
+            print("Menu - user didset")
+        }
+    }
+    
     private lazy var menuHeaderView: MenuHeaderView = {
         let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 140)
         let view = MenuHeaderView(frame: frame)

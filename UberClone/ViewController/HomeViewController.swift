@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
     
     weak var delegate: HomeViewControllerDelegate?
     
-    private var user: User? {
+    var user: User? {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
         didSet {
             locationInputView.user = user
@@ -95,7 +95,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
         enableLocationServices()
-        fetchUserData()
         centerMapOnUserLocation()
     }
     
@@ -239,14 +238,6 @@ class HomeViewController: UIViewController {
     }
 
 //MARK: - shared API
-    // 로그인한 유저 데이터 불러옴
-    func fetchUserData() {
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        Service.shared.fatchUserData(uid: currentUid) { user in
-            self.user = user
-            
-        }
-    }
     
     func signOut() {
         do {

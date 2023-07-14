@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ContainerViewController: UIViewController {
 
@@ -14,29 +15,47 @@ class ContainerViewController: UIViewController {
     private let menuViewController = MenuViewController()
     private var isExpanded = false
     
+    private var user: User? {
+        didSet {
+            guard let user = user else { return }
+            configureHomeViewController(withUser: user)
+            configureMenuViewController(withUser: user)
+        }
+    }
+    
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
-        configureHomeViewController()
-        configureMenuViewController()
+        fetchUserData()
+    }
+    
+//MARK: - API
+    // 로그인한 유저 데이터 불러옴
+    func fetchUserData() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fatchUserData(uid: currentUid) { user in
+            self.user = user
+        }
     }
     
 //MARK: - Helper Functions
     // home이 postion 1
-    func configureHomeViewController() {
+    func configureHomeViewController(withUser user: User) {
         addChild(homeViewController)
         homeViewController.didMove(toParent: self)
         view.addSubview(homeViewController.view)
         homeViewController.delegate = self
+        homeViewController.user = user
     }
     
     // menu가 position 0
-    func configureMenuViewController() {
+    func configureMenuViewController(withUser user: User) {
         addChild(menuViewController)
         menuViewController.didMove(toParent: self)
         // menuViewController를 가장 앞에 삽입
         view.insertSubview(menuViewController.view, at: 0)
+        menuViewController.user = user
     }
     
     func animateMenu(shouldExpand: Bool) {
