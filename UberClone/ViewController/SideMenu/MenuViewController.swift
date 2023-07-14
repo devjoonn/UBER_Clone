@@ -15,7 +15,8 @@ class MenuViewController: UIViewController {
 //MARK: - Properties
     var user: User? {
         didSet {
-            print("Menu - user didset")
+            guard let user = user else { return }
+            menuHeaderView.user = user
         }
     }
     
