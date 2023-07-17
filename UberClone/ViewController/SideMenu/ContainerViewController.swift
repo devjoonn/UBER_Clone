@@ -31,6 +31,15 @@ class ContainerViewController: UIViewController {
         configure()
     }
     
+    // 메뉴 확장 시 상태바 Hidden 설정
+    override var prefersStatusBarHidden: Bool {
+        return isExpanded
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
 //MARK: - API
     // 로그인한 유저 데이터 불러옴
     func fetchUserData() {
@@ -107,6 +116,15 @@ class ContainerViewController: UIViewController {
                 self.homeViewController.view.frame.origin.x = 0
             }, completion: completion)
         }
+        
+        animateStatusBar()
+    }
+    
+    // 상태바 설정
+    func animateStatusBar() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }, completion: nil)
     }
     
 //MARK: - Selector
