@@ -122,7 +122,7 @@ class LoginViewController: UIViewController {
                 return
             }
             print("로그인 성공!")
-            let nav = UINavigationController(rootViewController: HomeViewController())
+            let nav = UINavigationController(rootViewController: ContainerViewController())
             nav.modalPresentationStyle = .fullScreen
             self.present(nav, animated: true)
         }

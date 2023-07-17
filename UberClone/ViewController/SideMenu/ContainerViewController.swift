@@ -43,6 +43,9 @@ class ContainerViewController: UIViewController {
     func signOut() {
         do {
             try Auth.auth().signOut()
+            let vc = UINavigationController(rootViewController: LoginViewController())
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
         } catch {
             print("DEBUG: 로그아웃 에러")
         }
@@ -69,15 +72,15 @@ class ContainerViewController: UIViewController {
         
     }
     
-    func animateMenu(shouldExpand: Bool) {
+    func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil) {
         if shouldExpand {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeViewController.view.frame.origin.x = self.view.frame.width - 80
-            })
+            },completion: nil)
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeViewController.view.frame.origin.x = 0
-            })
+            }, completion: completion)
         }
     }
 }
@@ -93,23 +96,26 @@ extension ContainerViewController: HomeViewControllerDelegate {
 //MARK: - MenuViewController Delegate
 extension ContainerViewController: MenuViewControllerDelegate {
     func didSelect(option: MenuOptions) {
-        switch option {
-        case .yourTrips:
-            break
-        case .settings:
-            break
-        case .logout:
-            let alert = UIAlertController(title: nil,
-                                          message: "Are you sure want to log out?",
-                                          preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { _ in
-                self.signOut()
-            }))
-            
-            alert.addAction(UIAlertAction(title: "cancel", style: .cancel))
-            
-            self.present(alert, animated: true)
+        isExpanded.toggle()
+        animateMenu(shouldExpand: isExpanded) { _ in
+            switch option {
+            case .yourTrips:
+                break
+            case .settings:
+                break
+            case .logout:
+                let alert = UIAlertController(title: nil,
+                                              message: "Are you sure want to log out?",
+                                              preferredStyle: .actionSheet)
+                
+                alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { _ in
+                    self.signOut()
+                }))
+                
+                alert.addAction(UIAlertAction(title: "cancel", style: .cancel))
+                
+                self.present(alert, animated: true)
+            }
         }
     }
 }
