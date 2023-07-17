@@ -10,7 +10,7 @@ import SnapKit
 
 private let reuseIdentifier = "MenuCell"
 
-private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
+enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
     case yourTrips
     case settings
     case logout
@@ -24,10 +24,15 @@ private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
     }
 }
 
+protocol MenuViewControllerDelegate: class {
+    func didSelect(option: MenuOptions)
+}
+
 class MenuViewController: UIViewController {
 
 //MARK: - Properties
     private let user: User
+    weak var delegate: MenuViewControllerDelegate?
     
     private lazy var menuHeaderView: MenuHeaderView = {
         let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 140)
@@ -98,6 +103,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = option.description
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
+        delegate?.didSelect(option: option)
     }
 }
 

@@ -73,9 +73,24 @@ class ContainerViewController: UIViewController {
     }
 }
 
+//MARK: - HomeViewController Delegate
 extension ContainerViewController: HomeViewControllerDelegate {
     func handleMenuToggle() {
         isExpanded.toggle()
         animateMenu(shouldExpand: isExpanded)
+    }
+}
+
+//MARK: - MenuViewController Delegate
+extension ContainerViewController: MenuViewControllerDelegate {
+    func didSelect(option: MenuOptions) {
+        switch option {
+        case .yourTrips:
+            break
+        case .settings:
+            break
+        case .logout:
+            break
+        }
     }
 }
