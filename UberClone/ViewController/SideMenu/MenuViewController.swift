@@ -10,6 +10,20 @@ import SnapKit
 
 private let reuseIdentifier = "MenuCell"
 
+private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
+    case yourTrips
+    case settings
+    case logout
+    
+    var description: String {
+        switch self {
+        case .yourTrips: return "Your Trips"
+        case .settings: return "Settings"
+        case .logout: return "Log Out"
+        }
+    }
+}
+
 class MenuViewController: UIViewController {
 
 //MARK: - Properties
@@ -69,7 +83,8 @@ class MenuViewController: UIViewController {
 //MARK: - TableView Delegate
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        // CaseIterable 때문에 가능
+        return MenuOptions.allCases.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -78,7 +93,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = "Menu Option"
+
+        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
+        cell.textLabel?.text = option.description
         
         return cell
     }
