@@ -14,6 +14,8 @@ class ContainerViewController: UIViewController {
     private let homeViewController = HomeViewController()
     private var menuViewController: MenuViewController!
     private var isExpanded = false
+    private let blackView = UIView()
+    private lazy var  xOrigin = self.view.frame.width - 80
     
     private var user: User? {
         didSet {
@@ -26,9 +28,7 @@ class ContainerViewController: UIViewController {
 //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .backgroundColor
-        fetchUserData()
-        configureHomeViewController()
+        configure()
     }
     
 //MARK: - API
@@ -52,6 +52,12 @@ class ContainerViewController: UIViewController {
     }
     
 //MARK: - Helper Functions
+    func configure() {
+        view.backgroundColor = .backgroundColor
+        fetchUserData()
+        configureHomeViewController()
+    }
+    
     // home이 postion 1
     func configureHomeViewController() {
         addChild(homeViewController)
@@ -69,19 +75,44 @@ class ContainerViewController: UIViewController {
         // menuViewController를 가장 앞에 삽입
         view.insertSubview(menuViewController.view, at: 0)
         menuViewController.delegate = self
+        // 메뉴 뷰 옆 지도를 가리는 뷰
+        configureBlackView()
+    }
+    
+    func configureBlackView() {
+        blackView.frame = CGRect(x: self.xOrigin,
+                                      y: 0,
+                                      width: 80,
+                                      height: self.view.frame.height)
+        blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        blackView.alpha = 0
+        view.addSubview(blackView)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMenu))
+        blackView.addGestureRecognizer(tap)
     }
     
     func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil) {
+        
         if shouldExpand {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.homeViewController.view.frame.origin.x = self.view.frame.width - 80
-            },completion: nil)
+                // 홈 뷰 위치 수정
+                self.homeViewController.view.frame.origin.x = self.xOrigin
+                // 블랙 뷰 위치 수정
+                self.blackView.alpha = 1
+            }, completion: nil)
         } else {
+            self.blackView.alpha = 0
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeViewController.view.frame.origin.x = 0
             }, completion: completion)
         }
+    }
+    
+//MARK: - Selector
+    @objc func dismissMenu() {
+        isExpanded = false
+        animateMenu(shouldExpand: isExpanded)
     }
 }
 

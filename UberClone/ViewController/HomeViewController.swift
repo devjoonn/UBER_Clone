@@ -90,7 +90,6 @@ class HomeViewController: UIViewController {
 //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-//        signOut()
         view.backgroundColor = .backgroundColor
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
@@ -282,9 +281,6 @@ class HomeViewController: UIViewController {
             self.locationInputActivationView.alpha = 1
         }
     }
-    
-    
-
     
     // where to Bar를 누르면 나오는 View
     func configureLocationInputView() {
