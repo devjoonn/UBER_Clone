@@ -236,16 +236,6 @@ class HomeViewController: UIViewController {
             self.presentAlertController(withTitle: "Oops!", message: "The Passenger has decided to cancel this ride. Press Ok to continue.")
         })
     }
-
-//MARK: - shared API
-    
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print("DEBUG: 로그아웃 에러")
-        }
-    }
     
 //MARK: - set UI
     func setUIandConstraints() {

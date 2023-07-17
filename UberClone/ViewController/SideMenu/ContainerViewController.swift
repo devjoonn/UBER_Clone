@@ -40,6 +40,14 @@ class ContainerViewController: UIViewController {
         }
     }
     
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("DEBUG: 로그아웃 에러")
+        }
+    }
+    
 //MARK: - Helper Functions
     // home이 postion 1
     func configureHomeViewController() {
@@ -57,6 +65,7 @@ class ContainerViewController: UIViewController {
         menuViewController.didMove(toParent: self)
         // menuViewController를 가장 앞에 삽입
         view.insertSubview(menuViewController.view, at: 0)
+        menuViewController.delegate = self
         
     }
     
@@ -90,7 +99,17 @@ extension ContainerViewController: MenuViewControllerDelegate {
         case .settings:
             break
         case .logout:
-            break
+            let alert = UIAlertController(title: nil,
+                                          message: "Are you sure want to log out?",
+                                          preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { _ in
+                self.signOut()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "cancel", style: .cancel))
+            
+            self.present(alert, animated: true)
         }
     }
 }
