@@ -13,16 +13,11 @@ private let reuseIdentifier = "MenuCell"
 class MenuViewController: UIViewController {
 
 //MARK: - Properties
-    var user: User? {
-        didSet {
-            guard let user = user else { return }
-            menuHeaderView.user = user
-        }
-    }
+    private let user: User
     
     private lazy var menuHeaderView: MenuHeaderView = {
         let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 140)
-        let view = MenuHeaderView(frame: frame)
+        let view = MenuHeaderView(user: user, frame: frame)
         return view
     }()
     
@@ -32,6 +27,16 @@ class MenuViewController: UIViewController {
         $0.isScrollEnabled = false
         return $0
     }(UITableView())
+    
+//MARK: - Init
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
 //MARK: - Life Cycles
     override func viewDidLoad() {

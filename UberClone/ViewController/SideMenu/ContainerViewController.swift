@@ -12,7 +12,7 @@ class ContainerViewController: UIViewController {
 
 //MARK: - Properties
     private let homeViewController = HomeViewController()
-    private let menuViewController = MenuViewController()
+    private var menuViewController: MenuViewController!
     private var isExpanded = false
     
     private var user: User? {
@@ -52,11 +52,12 @@ class ContainerViewController: UIViewController {
     
     // menu가 position 0
     func configureMenuViewController(withUser user: User) {
+        menuViewController = MenuViewController(user: user)
         addChild(menuViewController)
         menuViewController.didMove(toParent: self)
         // menuViewController를 가장 앞에 삽입
         view.insertSubview(menuViewController.view, at: 0)
-        menuViewController.user = user
+        
     }
     
     func animateMenu(shouldExpand: Bool) {

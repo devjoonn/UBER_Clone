@@ -11,12 +11,7 @@ import SnapKit
 class MenuHeaderView: UIView {
 
 //MARK: - properties
-    var user: User? {
-        didSet {
-            fullnameLabel.text = user?.fullname
-            emailLabel.text = user?.email
-        }
-    }
+    private let user: User
     
     private let profileImageView: UIImageView = {
         $0.backgroundColor = .lightGray
@@ -24,22 +19,23 @@ class MenuHeaderView: UIView {
         return $0
     }(UIImageView())
     
-    private let fullnameLabel: UILabel = {
+    private lazy var fullnameLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
-        $0.text = "박현준"
+        $0.text = user.fullname
         return $0
     }(UILabel())
     
-    private let emailLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .lightGray
-        $0.text = "test@test.com"
+        $0.text = user.email
         return $0
     }(UILabel())
     
 //MARK: - Life cycles
-    override init(frame: CGRect) {
+    init(user: User, frame: CGRect) {
+        self.user = user
         super.init(frame: frame)
         backgroundColor = .black
         setUIandConstraints()
