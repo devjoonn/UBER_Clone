@@ -31,15 +31,6 @@ class ContainerViewController: UIViewController {
         configure()
     }
     
-    // 메뉴 확장 시 상태바 Hidden 설정
-    override var prefersStatusBarHidden: Bool {
-        return isExpanded
-    }
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
-    }
-    
 //MARK: - API
     // 로그인한 유저 데이터 불러옴
     func fetchUserData() {
@@ -104,27 +95,24 @@ class ContainerViewController: UIViewController {
     func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil) {
         
         if shouldExpand {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8,
+                           initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 // 홈 뷰 위치 수정
                 self.homeViewController.view.frame.origin.x = self.xOrigin
                 // 블랙 뷰 위치 수정
                 self.blackView.alpha = 1
+                // 상태바 숨김
+                UIApplication.shared.isStatusBarHidden = true
             }, completion: nil)
         } else {
             self.blackView.alpha = 0
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8,
+                           initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeViewController.view.frame.origin.x = 0
+                // 상태바 숨김 해제
+                UIApplication.shared.isStatusBarHidden = false
             }, completion: completion)
         }
-        
-        animateStatusBar()
-    }
-    
-    // 상태바 설정
-    func animateStatusBar() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }, completion: nil)
     }
     
 //MARK: - Selector

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>항상 위치정보를 알 수 있게 허용해주세요.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
