@@ -139,7 +139,8 @@ extension ContainerViewController: MenuViewControllerDelegate {
             case .yourTrips:
                 break
             case .settings:
-                let nav = UINavigationController(rootViewController: SettingsViewController())
+                guard let user = self.user else { return }
+                let nav = UINavigationController(rootViewController: SettingsViewController(user: user))
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
                 break
