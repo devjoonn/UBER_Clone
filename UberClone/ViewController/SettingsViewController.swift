@@ -10,6 +10,25 @@ import SnapKit
 
 private let reuseIdentifier = "LocationCell"
 
+enum LocationType: Int, CaseIterable, CustomStringConvertible {
+    case home
+    case work
+    
+    var description: String {
+        switch self {
+        case .home: return "Home"
+        case .work: return "Work"
+        }
+    }
+    
+    var subtitle: String {
+        switch self {
+        case .home: return "Add Home"
+        case .work: return "Add Work"
+        }
+    }
+}
+
 class SettingsViewController: UITableViewController {
 //MARK: - properties
     private let user: User
@@ -69,7 +88,7 @@ class SettingsViewController: UITableViewController {
 //MARK: - UITableView Delegate
 extension SettingsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return LocationType.allCases.count
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -100,7 +119,9 @@ extension SettingsViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
-        cell.titleLabel.text = "Home"
+        
+        guard let type = LocationType(rawValue: indexPath.row) else { return cell }
+        cell.type = type
         
         return cell
     }
