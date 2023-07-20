@@ -6,19 +6,20 @@
 //
 
 import UIKit
+import MapKit
 import SnapKit
 
 private let reuserIdentifier = "Cell"
 
 class AddLocationViewController: UITableViewController {
 // MARK: - Properties
-    
-    
+    private let searchBar = UISearchBar()
     
 // MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        configureSearchBar()
     }
 
 //MARK: - Helper Functions
@@ -30,5 +31,15 @@ class AddLocationViewController: UITableViewController {
         
         tableView.addShadow()
     }
+    
+    func configureSearchBar() {
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
+    }
 
+}
+
+extension AddLocationViewController: UISearchBarDelegate {
+    
 }
