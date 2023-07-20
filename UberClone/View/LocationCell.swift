@@ -19,7 +19,7 @@ class LocationCell: UITableViewCell {
         }
     }
     
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 14)
         return $0
     }(UILabel())

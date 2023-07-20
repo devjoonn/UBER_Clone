@@ -65,3 +65,43 @@ class SettingsViewController: UITableViewController {
     }
 
 }
+
+//MARK: - UITableView Delegate
+extension SettingsViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view: UIView = {
+            $0.backgroundColor = .backgroundColor 
+            return $0
+        }(UIView())
+        
+        let title: UILabel = {
+            $0.font = UIFont.systemFont(ofSize: 16)
+            $0.textColor = .white
+            $0.text = "Favorites"
+            return $0
+        }(UILabel())
+        
+        view.addSubview(title)
+        title.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(16)
+        }
+        
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
+        cell.titleLabel.text = "Home"
+        
+        return cell
+    }
+}
