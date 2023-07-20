@@ -63,6 +63,7 @@ class SettingsViewController: UITableViewController {
         tableView.register(LocationCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.backgroundColor = .white
         tableView.tableHeaderView = infoHeaderView
+        tableView.tableFooterView = UIView()
     }
     
     func configureNavigationBar() {
@@ -128,7 +129,8 @@ extension SettingsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let type = LocationType(rawValue: indexPath.row) else { return }
-        print("DEBUG: Type: \(type.description)")
+        let nav = UINavigationController(rootViewController: AddLocationViewController())
         
+        present(nav,animated: true)
     }
 }
