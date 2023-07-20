@@ -125,4 +125,10 @@ extension SettingsViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let type = LocationType(rawValue: indexPath.row) else { return }
+        print("DEBUG: Type: \(type.description)")
+        
+    }
 }
