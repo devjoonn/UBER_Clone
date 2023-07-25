@@ -132,7 +132,6 @@ extension SettingsViewController {
         guard let type = LocationType(rawValue: indexPath.row) else { return }
         guard let location = locationManager?.location else { return }
         let nav = UINavigationController(rootViewController: AddLocationViewController(type: type, location: location))
-        
         present(nav,animated: true)
     }
 }

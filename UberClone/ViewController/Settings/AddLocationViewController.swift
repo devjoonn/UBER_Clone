@@ -82,10 +82,19 @@ extension AddLocationViewController {
 
 //MARK: - UISearchBarDelegate
 extension AddLocationViewController: UISearchBarDelegate {
-    
+    // searchBar에서 text가 변경될 때 마다
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchCompleter.queryFragment = searchText
+    }
 }
 
 //MARK: - MKLocalSearchCompleterDelegate
 extension AddLocationViewController: MKLocalSearchCompleterDelegate {
-    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        
+        print("DEBUG: SearchResult = \(searchResults)")
+        
+        tableView.reloadData()
+    }
 }
