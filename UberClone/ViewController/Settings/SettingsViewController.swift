@@ -131,7 +131,21 @@ extension SettingsViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let type = LocationType(rawValue: indexPath.row) else { return }
         guard let location = locationManager?.location else { return }
-        let nav = UINavigationController(rootViewController: AddLocationViewController(type: type, location: location))
+        let controller = AddLocationViewController(type: type, location: location)
+        controller.delegate = self
+        let nav = UINavigationController(rootViewController: controller)
         present(nav,animated: true)
     }
 }
+
+//MARK: - AddLocationViewControllerDelegate
+extension SettingsViewController: AddLocationViewControllerDelegate {
+    func updateLocation(locationString: String, type: LocationType) {
+        // DB에 선택 값 key value 저장
+        PassengerService.shared.saveLocation(locationString: locationString, type: type) { (error, ref) in
+            self.dismiss(animated: true)
+        }
+    }
+}
+
+// feat: AddLocationViewDelegate Protocol - 입력한 주소 값 DB에 key: value 저장

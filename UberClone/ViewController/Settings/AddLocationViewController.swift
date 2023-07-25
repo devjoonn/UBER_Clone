@@ -11,6 +11,10 @@ import SnapKit
 
 private let reuserIdentifier = "Cell"
 
+protocol AddLocationViewControllerDelegate: class {
+    func updateLocation(locationString: String, type: LocationType)
+}
+
 class AddLocationViewController: UITableViewController {
 // MARK: - Properties
     private let searchBar = UISearchBar()
@@ -20,6 +24,8 @@ class AddLocationViewController: UITableViewController {
     }
     private let type: LocationType
     private let location: CLLocation
+    
+    weak var delegate: AddLocationViewControllerDelegate?
     
 // MARK: - Life cycles
     init(type: LocationType, location: CLLocation) {
@@ -83,6 +89,15 @@ extension AddLocationViewController {
         cell.textLabel?.text = result.title
         cell.detailTextLabel?.text = result.subtitle
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let result = searchResults[indexPath.row]
+        let title = result.title
+        let subtitle = result.subtitle
+        let locationString = title + " " + subtitle
+        
+        delegate?.updateLocation(locationString: locationString, type: type)
     }
 }
 

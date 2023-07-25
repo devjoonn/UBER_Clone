@@ -116,6 +116,14 @@ struct PassengerService {
         
         REF_TRIPS.child(uid).removeValue(completionBlock: completion)
     }
+    
+    // AddLocationView 지역 저장
+    func saveLocation(locationString: String, type: LocationType, completion: @escaping (Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // DB user에 home, work 나눠서 key: value 하나 추가(AddLocation tableViewCell 에서 누른 값)
+        let key: String = type == .home ? "homeLocation" : "workLocation"
+        REF_USERS.child(uid).child(key).setValue(locationString, withCompletionBlock: completion)
+    }
 }
 
 
