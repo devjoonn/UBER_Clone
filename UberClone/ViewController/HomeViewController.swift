@@ -43,7 +43,8 @@ class HomeViewController: UIViewController {
     private let rideActionView = RideActionView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
-    private var searchResults = [MKPlacemark]()
+    private var searchResults = [MKPlacemark]() // 검색 결과 값
+    private var savedLocations = [MKPlacemark]() // 유저별 home, work 주소 값
     private final let locationInputViewHeight: CGFloat = 200 // - 어디서든 수정 불가
     private final let rideActionViewHeight: CGFloat = 300 // - 어디서든 수정 불가
     private var actionButtonConfig = ActionButtonConfiguration()
@@ -58,7 +59,8 @@ class HomeViewController: UIViewController {
             if user?.accountType == .passenger {
                 fetchDrivers() // mapView에 driver 표시
                 configureLocationActivationView() // 주소 입력 창
-                observeCurrentTrip() // 현재 유저의 상태 변경 
+                observeCurrentTrip() // 현재 유저의 상태 변경
+                configureSavedUserLocation() // home,work location 설정된 값을 geocode로 변환
             } else {
                 observeTrips() // driver 시
             }
@@ -249,6 +251,29 @@ class HomeViewController: UIViewController {
         }
         
         configureTableView()
+    }
+    
+    // SettingView에서 설정한 home, work Location 설정
+    func configureSavedUserLocation() {
+        guard let user = user else { return }
+        if let homeLocation = user.homeLocation {
+            geocodeAddressString(address: homeLocation)
+        }
+        
+        if let workLocation = user.workLocation {
+            geocodeAddressString(address: workLocation)
+        }
+    }
+    
+    func geocodeAddressString(address: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (placeMarks, error) in
+            guard let clPlaceMark = placeMarks?.first else { return }
+            let placeMark = MKPlacemark(placemark: clPlaceMark)
+            self.savedLocations.append(placeMark)
+            self.tableView.reloadData()
+            
+        }
     }
     
     // MapView
@@ -557,7 +582,7 @@ extension HomeViewController: LocationInputViewDelegate {
 //MARK: - TableView Delegate/DataSource
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Test"
+        return section == 0 ? "Saved Locations" : "Results"
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -565,11 +590,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : searchResults.count
+        return section == 0 ? savedLocations.count : searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
+        
+        if indexPath.section == 0 {
+            cell.placemark = savedLocations[indexPath.row]
+        }
         
         if indexPath.section == 1 {
             cell.placemark = searchResults[indexPath.row]
