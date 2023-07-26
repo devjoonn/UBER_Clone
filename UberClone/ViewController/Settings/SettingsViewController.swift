@@ -31,7 +31,7 @@ enum LocationType: Int, CaseIterable, CustomStringConvertible {
 
 class SettingsViewController: UITableViewController {
 //MARK: - properties
-    private let user: User
+    private var user: User
     private let locationManager = LocationHandler.shared.locationManager
     
     private lazy var infoHeaderView: UserInfoHeaderView = {
@@ -144,6 +144,13 @@ extension SettingsViewController: AddLocationViewControllerDelegate {
         // DB에 선택 값 key value 저장
         PassengerService.shared.saveLocation(locationString: locationString, type: type) { (error, ref) in
             self.dismiss(animated: true)
+            
+            switch type {
+            case .home:
+                self.user.homeLocation = locationString
+            case .work:
+                self.user.workLocation = locationString
+            }
         }
     }
 }
