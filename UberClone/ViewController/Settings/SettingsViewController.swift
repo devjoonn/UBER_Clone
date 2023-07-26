@@ -147,5 +147,3 @@ extension SettingsViewController: AddLocationViewControllerDelegate {
         }
     }
 }
-
-// feat: AddLocationViewDelegate Protocol - 입력한 주소 값 DB에 key: value 저장

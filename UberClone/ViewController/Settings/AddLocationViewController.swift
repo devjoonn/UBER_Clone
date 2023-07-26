@@ -96,8 +96,9 @@ extension AddLocationViewController {
         let title = result.title
         let subtitle = result.subtitle
         let locationString = title + " " + subtitle
-        
-        delegate?.updateLocation(locationString: locationString, type: type)
+        // DB 저장 값에서 대한민국 제거하고 저장
+        let trimLocationString = locationString.replacingOccurrences(of: " 대한민국", with: "")
+        delegate?.updateLocation(locationString: trimLocationString, type: type)
     }
 }
 
