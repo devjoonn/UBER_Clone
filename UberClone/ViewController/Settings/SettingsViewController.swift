@@ -10,6 +10,10 @@ import SnapKit
 
 private let reuseIdentifier = "LocationCell"
 
+protocol SettingsViewControllerDelegate: class {
+    func updateUser(_ controller: SettingsViewController)
+}
+
 enum LocationType: Int, CaseIterable, CustomStringConvertible {
     case home
     case work
@@ -31,8 +35,10 @@ enum LocationType: Int, CaseIterable, CustomStringConvertible {
 
 class SettingsViewController: UITableViewController {
 //MARK: - properties
-    private var user: User
+    var user: User
     private let locationManager = LocationHandler.shared.locationManager
+    weak var delegate: SettingsViewControllerDelegate?
+    var userInfoUpdated = false
     
     private lazy var infoHeaderView: UserInfoHeaderView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 100)
@@ -91,7 +97,14 @@ class SettingsViewController: UITableViewController {
     }
     
 //MARK: - Selector
+    // Setting 화면에서 나갈 시
     @objc func handleDismissal() {
+         // API를 요청해 값이 변경되었다면
+        if userInfoUpdated {
+            // homeLocation, workLocation이 저장되어있는 user 객체 -> ContainerView 넣음
+            delegate?.updateUser(self)
+        }
+        
         self.dismiss(animated: true)
     }
 
@@ -155,6 +168,8 @@ extension SettingsViewController: AddLocationViewControllerDelegate {
         // DB에 주소 선택 값 key value 저장
         PassengerService.shared.saveLocation(locationString: locationString, type: type) { (error, ref) in
             self.dismiss(animated: true)
+            // API가 불려 성공적으로 DB에 저장되었을 시 userInfoUpdate 변경
+            self.userInfoUpdated = true
             
             // 저장한 값을 user에 입력
             switch type {

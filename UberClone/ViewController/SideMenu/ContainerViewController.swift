@@ -20,6 +20,7 @@ class ContainerViewController: UIViewController {
     private var user: User? {
         didSet {
             guard let user = user else { return }
+            print("DUBUG: 홈 유저 지역 = \(user.homeLocation)")
             homeViewController.user = user
             configureMenuViewController(withUser: user)
         }
@@ -122,6 +123,13 @@ class ContainerViewController: UIViewController {
     }
 }
 
+//MARK: - SettingsViewControllerDelegate
+extension ContainerViewController: SettingsViewControllerDelegate {
+    func updateUser(_ controller: SettingsViewController) {
+        self.user = controller.user
+    }
+}
+
 //MARK: - HomeViewController Delegate
 extension ContainerViewController: HomeViewControllerDelegate {
     func handleMenuToggle() {
@@ -140,7 +148,9 @@ extension ContainerViewController: MenuViewControllerDelegate {
                 break
             case .settings:
                 guard let user = self.user else { return }
-                let nav = UINavigationController(rootViewController: SettingsViewController(user: user))
+                let controller = SettingsViewController(user: user)
+                controller.delegate = self
+                let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
                 break
