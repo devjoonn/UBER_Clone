@@ -59,6 +59,16 @@ class SettingsViewController: UITableViewController {
     }
     
 //MARK: - Helper Function
+    // 셀의 addressLabel에 주소값을 보여줄 때
+    func locationText(forType type: LocationType) -> String {
+        switch type {
+        case .home:
+            return user.homeLocation ?? type.subtitle
+        case .work:
+            return user.workLocation ?? type.subtitle
+        }
+    }
+    
     func configureTableView() {
         tableView.rowHeight = 60
         tableView.register(LocationCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -123,7 +133,8 @@ extension SettingsViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
         
         guard let type = LocationType(rawValue: indexPath.row) else { return cell }
-        cell.type = type
+        cell.titleLabel.text = type.description
+        cell.addressLabel.text = locationText(forType: type)
         
         return cell
     }
@@ -141,16 +152,19 @@ extension SettingsViewController {
 //MARK: - AddLocationViewControllerDelegate
 extension SettingsViewController: AddLocationViewControllerDelegate {
     func updateLocation(locationString: String, type: LocationType) {
-        // DB에 선택 값 key value 저장
+        // DB에 주소 선택 값 key value 저장
         PassengerService.shared.saveLocation(locationString: locationString, type: type) { (error, ref) in
             self.dismiss(animated: true)
             
+            // 저장한 값을 user에 입력
             switch type {
             case .home:
                 self.user.homeLocation = locationString
             case .work:
                 self.user.workLocation = locationString
             }
+            
+            self.tableView.reloadData()
         }
     }
 }
