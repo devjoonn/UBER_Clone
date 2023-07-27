@@ -256,6 +256,9 @@ class HomeViewController: UIViewController {
     // SettingView에서 설정한 home, work Location 설정
     func configureSavedUserLocation() {
         guard let user = user else { return }
+        // tableView 중복 표시 오류 해결
+        savedLocations.removeAll()
+        
         if let homeLocation = user.homeLocation {
             geocodeAddressString(address: homeLocation)
         }
@@ -267,12 +270,13 @@ class HomeViewController: UIViewController {
     
     func geocodeAddressString(address: String) {
         let geocoder = CLGeocoder()
+        // 입력한 주소를 지리적 좌표로 변환
         geocoder.geocodeAddressString(address) { (placeMarks, error) in
             guard let clPlaceMark = placeMarks?.first else { return }
             let placeMark = MKPlacemark(placemark: clPlaceMark)
             self.savedLocations.append(placeMark)
             self.tableView.reloadData()
-            
+            print("savedLocation: \(self.savedLocations)")
         }
     }
     
