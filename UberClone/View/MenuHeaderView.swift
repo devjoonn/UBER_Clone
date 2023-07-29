@@ -15,28 +15,28 @@ class MenuHeaderView: UIView {
     
     private lazy var profileFirstNameView: UIView = {
         $0.backgroundColor = .darkGray
-        $0.layer.cornerRadius = 64 / 2
+        $0.layer.cornerRadius = 80 / 2
         $0.addSubview(initialLabel)
         initialLabel.snp.makeConstraints { $0.center.equalToSuperview() }
         return $0
     }(UIView())
     
     private lazy var initialLabel: UILabel =  {
-        $0.font = UIFont.systemFont(ofSize: 42)
+        $0.font = UIFont.systemFont(ofSize: 55)
         $0.textColor = .white
         $0.text = user.firstInitial
         return $0
     }(UILabel())
     
     private lazy var fullnameLabel: UILabel = {
-        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.font = UIFont.systemFont(ofSize: 22)
         $0.textColor = .white
         $0.text = user.fullname
         return $0
     }(UILabel())
     
     private lazy var emailLabel: UILabel = {
-        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.font = UIFont.systemFont(ofSize: 15)
         $0.textColor = .lightGray
         $0.text = user.email
         return $0
@@ -59,9 +59,9 @@ class MenuHeaderView: UIView {
         addSubview(profileFirstNameView)
         
         profileFirstNameView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(4)
+            make.top.equalToSuperview().inset(12)
             make.leading.equalToSuperview().inset(12)
-            make.height.width.equalTo(64)
+            make.height.width.equalTo(80)
         }
         
         let stack = UIStackView(arrangedSubviews: [fullnameLabel, emailLabel])

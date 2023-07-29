@@ -11,13 +11,11 @@ import SnapKit
 private let reuseIdentifier = "MenuCell"
 
 enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
-    case yourTrips
     case settings
     case logout
     
     var description: String {
         switch self {
-        case .yourTrips: return "Your Trips"
         case .settings: return "Settings"
         case .logout: return "Log Out"
         }
@@ -35,7 +33,7 @@ class MenuViewController: UIViewController {
     weak var delegate: MenuViewControllerDelegate?
     
     private lazy var menuHeaderView: MenuHeaderView = {
-        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 140)
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 110)
         let view = MenuHeaderView(user: user, frame: frame)
         return view
     }()

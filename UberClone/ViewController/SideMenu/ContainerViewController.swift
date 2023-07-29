@@ -141,11 +141,10 @@ extension ContainerViewController: HomeViewControllerDelegate {
 //MARK: - MenuViewController Delegate
 extension ContainerViewController: MenuViewControllerDelegate {
     func didSelect(option: MenuOptions) {
+        // menu tableView Cell Tap 시
         isExpanded.toggle()
         animateMenu(shouldExpand: isExpanded) { _ in
             switch option {
-            case .yourTrips:
-                break
             case .settings:
                 guard let user = self.user else { return }
                 let controller = SettingsViewController(user: user)
