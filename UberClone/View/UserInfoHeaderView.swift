@@ -12,11 +12,20 @@ class UserInfoHeaderView: UIView {
 //MARK: - properties
     private let user: User
     
-    private let profileImageView: UIImageView = {
-        $0.backgroundColor = .lightGray
+    private lazy var profileFirstNameView: UIView = {
+        $0.backgroundColor = .darkGray
         $0.layer.cornerRadius = 64 / 2
+        $0.addSubview(initialLabel)
+        initialLabel.snp.makeConstraints { $0.center.equalToSuperview() }
         return $0
-    }(UIImageView())
+    }(UIView())
+    
+    private lazy var initialLabel: UILabel =  {
+        $0.font = UIFont.systemFont(ofSize: 42)
+        $0.textColor = .white
+        $0.text = user.firstInitial
+        return $0
+    }(UILabel())
     
     private lazy var fullnameLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -46,9 +55,9 @@ class UserInfoHeaderView: UIView {
     private func setUIandConstraints() {
         backgroundColor = .white
         
-        addSubview(profileImageView)
+        addSubview(profileFirstNameView)
         
-        profileImageView.snp.makeConstraints { make in
+        profileFirstNameView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(16)
             make.height.width.equalTo(64)
@@ -60,8 +69,8 @@ class UserInfoHeaderView: UIView {
         stack.spacing = 4
         stack.axis = .vertical
         stack.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImageView.snp.centerY)
-            make.leading.equalTo(profileImageView.snp.trailing).inset(-12)
+            make.centerY.equalTo(profileFirstNameView.snp.centerY)
+            make.leading.equalTo(profileFirstNameView.snp.trailing).inset(-12)
         }
     }
     
