@@ -56,6 +56,7 @@ class HomeViewController: UIViewController {
         // 단일 책임 원칙으로 유저에 유저 정보를 넣어서 LocationInputView 자체에서 변경가능하게
         didSet {
             locationInputView.user = user
+            centerMapOnUserLocation()
             if user?.accountType == .passenger {
                 fetchDrivers() // mapView에 driver 표시
                 configureLocationActivationView() // 주소 입력 창
@@ -96,7 +97,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setUIandConstraints()
         enableLocationServices()
-        centerMapOnUserLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -617,6 +617,11 @@ extension HomeViewController: LocationInputViewDelegate {
 
 //MARK: - TableView Delegate/DataSource
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "Saved Locations" : "Results"
     }
