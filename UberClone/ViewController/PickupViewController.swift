@@ -122,10 +122,14 @@ class PickupViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    // driver: pickup 애니메이션 추가
     @objc func animateProgess() {
         circularProgressView.animatePulsatingLayer()
         circularProgressView.setProgressWithAnimation(duration: 5, value: 0) {
-//            self.dismiss(animated: true)
+            // 5초동안 못받을 시 요청 삭제
+            DriverService.shared.updateTripState(trip: self.trip, state: .denied) { [weak self] (error, ref) in
+                self?.dismiss(animated: true)
+            }
         }
     }
 
