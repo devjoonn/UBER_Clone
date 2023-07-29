@@ -63,5 +63,36 @@ class CircularProgressView: UIView {
         
         return layer
     }
+    
+    // 심장 박동 애니메이션
+    func animatePulsatingLayer() {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        
+        animation.toValue = 1.25
+        animation.duration = 0.8
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animation.autoreverses = true
+        animation.repeatCount = Float.infinity
+        
+        pulsatingLayer.add(animation, forKey: "pulsing")
+    }
+    
+    // 시간 초로 원형 사라지는 애니메이션과 애니메이션 끝나면 completion 설정
+    func setProgressWithAnimation(duration: TimeInterval, value: Float,
+                                  completion: @escaping () -> Void) {
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.duration = duration
+        animation.fromValue = 1
+        animation.toValue = value
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        progressLayer.strokeEnd = CGFloat(value)
+        progressLayer.add(animation, forKey: "animateProgress")
+        
+        CATransaction.commit()
+    }
 }
 

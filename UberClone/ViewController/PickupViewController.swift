@@ -20,12 +20,14 @@ class PickupViewController: UIViewController {
     weak var delegate: PickupViewControllerDelegate?
     
     private lazy var circularProgressView: CircularProgressView = {
-        let cp = CircularProgressView(frame: .zero)
+        let frame = CGRect(x: 0, y: 0, width: 360, height: 360)
+        let cp = CircularProgressView(frame: frame)
         
         cp.addSubview(mapView)
         mapView.snp.makeConstraints {
             $0.width.height.equalTo(268)
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(15)
         }
         mapView.layer.cornerRadius = 268 / 2
         
@@ -75,6 +77,7 @@ class PickupViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureMapView()
+        self.perform(#selector(animateProgess), with: nil, afterDelay: 0.5)
     }
     
 //MARK: - Helper Functions
@@ -99,7 +102,7 @@ class PickupViewController: UIViewController {
         }
         circularProgressView.snp.makeConstraints { make in
             make.width.height.equalTo(360)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
+            make.top.equalTo(cancelButton.snp.bottom).inset(-15)
             make.centerX.equalToSuperview()
             
         }
@@ -117,6 +120,13 @@ class PickupViewController: UIViewController {
 //MARK: - Selector
     @objc func handleDismissal() {
         dismiss(animated: true)
+    }
+    
+    @objc func animateProgess() {
+        circularProgressView.animatePulsatingLayer()
+        circularProgressView.setProgressWithAnimation(duration: 5, value: 0) {
+//            self.dismiss(animated: true)
+        }
     }
 
     @objc func handleAcceptTrip() {
