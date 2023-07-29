@@ -29,7 +29,7 @@ class CircularProgressView: UIView {
 //MARK: - Helper Functions
     // 원형 애니메이션 코드
     private func configureCircleLayers() {
-        pulsatingLayer = circleShapeLayer(strokeColor: .clear, fillColor: .blue)
+        pulsatingLayer = circleShapeLayer(strokeColor: .clear, fillColor: .mainBlueTint)
         layer.addSublayer(pulsatingLayer)
         
         trackLayer = circleShapeLayer(strokeColor: .clear, fillColor: .clear)
@@ -71,6 +71,7 @@ class CircularProgressView: UIView {
         animation.toValue = 1.25
         animation.duration = 0.8
         animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        // 무한 펌핑 반복
         animation.autoreverses = true
         animation.repeatCount = Float.infinity
         
@@ -86,12 +87,14 @@ class CircularProgressView: UIView {
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = duration
+        // fromValue 1 -> toValue 0 (1로 시작해서 원점 0으로)
         animation.fromValue = 1
         animation.toValue = value
         animation.timingFunction = CAMediaTimingFunction(name: .linear)
         progressLayer.strokeEnd = CGFloat(value)
         progressLayer.add(animation, forKey: "animateProgress")
         
+        // 커밋 이후 -> setCompeltionBlock
         CATransaction.commit()
     }
 }
