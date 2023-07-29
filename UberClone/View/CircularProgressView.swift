@@ -19,6 +19,7 @@ class CircularProgressView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureCircleLayers() 
     }
     
     required init?(coder: NSCoder) {
@@ -62,6 +63,5 @@ class CircularProgressView: UIView {
         
         return layer
     }
-    
 }
 

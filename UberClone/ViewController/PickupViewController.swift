@@ -16,12 +16,26 @@ protocol PickupViewControllerDelegate: class {
 class PickupViewController: UIViewController {
 
 //MARK: - Properties
+    let trip: Trip
+    weak var delegate: PickupViewControllerDelegate?
+    
+    private lazy var circularProgressView: CircularProgressView = {
+        let cp = CircularProgressView(frame: .zero)
+        
+        cp.addSubview(mapView)
+        mapView.snp.makeConstraints {
+            $0.width.height.equalTo(268)
+            $0.centerX.centerY.equalToSuperview()
+        }
+        mapView.layer.cornerRadius = 268 / 2
+        
+        return cp
+    }()
+    
     private let mapView: MKMapView = {
         $0.layer.cornerRadius = 270 / 2
         return $0
     }(MKMapView())
-    
-    let trip: Trip
     
     private let cancelButton: UIButton = {
         $0.setImage(UIImage(named: "baseline_clear_white"), for: .normal)
@@ -44,8 +58,6 @@ class PickupViewController: UIViewController {
         $0.addTarget(self, action: #selector(handleAcceptTrip), for: .touchUpInside)
         return $0
     }(UIButton())
-    
-    weak var delegate: PickupViewControllerDelegate?
     
 //MARK: - Life cycles
     
@@ -77,7 +89,7 @@ class PickupViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .backgroundColor
         view.addSubview(cancelButton)
-        view.addSubview(mapView)
+        view.addSubview(circularProgressView)
         view.addSubview(pickupLabel)
         view.addSubview(acceptTripButton)
         
@@ -85,14 +97,15 @@ class PickupViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(16)
         }
-        mapView.snp.makeConstraints { make in
-            make.width.height.equalTo(270)
+        circularProgressView.snp.makeConstraints { make in
+            make.width.height.equalTo(360)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(115)
+            
         }
         pickupLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(mapView.snp.bottom).inset(-50)
+            make.top.equalTo(circularProgressView.snp.bottom).inset(-50)
         }
         acceptTripButton.snp.makeConstraints { make in
             make.top.equalTo(pickupLabel.snp.bottom).inset(-16)
