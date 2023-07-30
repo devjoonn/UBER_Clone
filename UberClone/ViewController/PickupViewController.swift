@@ -126,10 +126,10 @@ class PickupViewController: UIViewController {
     @objc func animateProgess() {
         circularProgressView.animatePulsatingLayer()
         circularProgressView.setProgressWithAnimation(duration: 5, value: 0) {
-            // 5초동안 못받을 시 요청 삭제
-            DriverService.shared.updateTripState(trip: self.trip, state: .denied) { [weak self] (error, ref) in
-                self?.dismiss(animated: true)
-            }
+            // MARK: 5초동안 못받을 시 요청 삭제
+//            DriverService.shared.updateTripState(trip: self.trip, state: .denied) { [weak self] (error, ref) in
+//                self?.dismiss(animated: true)
+//            }
         }
     }
 
